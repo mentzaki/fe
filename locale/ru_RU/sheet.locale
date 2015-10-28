@@ -1,0 +1,24 @@
+locale
+	name = Русский (Россия)
+mainmenu
+	singleplayer = Одиночная игра
+	multiplayer = Игра по сети
+	settings = Настройки
+	exit = Выйти из игры
+	language = Выбор языка
+skirmish
+	name = Имя
+	team = Команда
+	faction = Сторона
+	color = Цвет
+	ready = Готовность
+settings
+	settings = Настройки
+	music = Громкость музыки:
+	sound = Громкость звука:
+	parentalcontrol = Родительский контроль:
+	reducedviolence = Скрыть насилие
+	particles = Много частиц
+	controls = Клавиши
+	language = Выбор языка
+	confirm = Принять

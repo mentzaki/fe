@@ -1,0 +1,24 @@
+locale
+	name = English (United States)
+mainmenu
+	singleplayer = Singleplayer
+	multiplayer = Multiplayer
+	settings = Settings 
+	exit = Exit
+	language = Language
+skirmish
+	name = Name
+	team = Team
+	faction = Faction
+	color = Color
+	ready = Ready
+settings
+	settings = Settings
+	music = Music volume:
+	sound = Sound volume:
+	parentalcontrol = Parental control:
+	reducedviolence = Reduced violence
+	particles = Additional Particles
+	controls = Controls
+	language = Language
+	confirm = Confirm
