@@ -1,77 +1,79 @@
 locale
-	name = English (United States)
+        name = English (United States)
 fmusic
-	nowplaying = Now playing:
+        nowplaying = Now playing:
 mainmenu
-	singleplayer = Singleplayer
-	multiplayer = Multiplayer
-	settings = Settings 
-	exit = Exit
-	language = Language
+        singleplayer = Singleplayer
+        multiplayer = Multiplayer
+        settings = Settings 
+        exit = Exit
+        language = Language
 skirmish
-	name = Name
-	team = Team
-	faction = Faction
-	color = Color
-	ready = Ready
+        name = Name
+        team = Team
+        faction = Faction
+        color = Color
+        ready = Ready
 settings
-	settings = Settings
-	music = Music volume:
-	sound = Sound volume:
-	parentalcontrol = Parental control:
-	reducedviolence = Reduced violence
-	particles = Additional Particles
-	controls = Controls
-	language = Language
-	confirm = Confirm
+        settings = Settings
+        music = Music volume:
+        sound = Sound volume:
+        parentalcontrol = Parental control:
+        reducedviolence = Reduced violence
+        particles = Additional Particles
+        doublepixels = Double pixels
+        fullscreen = Fullscreen mode
+        controls = Controls
+        language = Language
+        confirm = Confirm
 controls
-	developers = Developer's panel
-	menu = Menu
+        developers = Developer's panel
+        menu = Menu
 catnames
-	male
-		Marsieck
-		Moorsieck
-		Murkees
-		Max
-		Marz
-		Marilyn
-		Musik
-		Mavreek
-		Markus
-		Micle
-		Majoer
-		Moorchick
-		Mozart
-		Moseek
-		Mathrohskeen
-		Meowzedong
-		Meethya
-		Michel
-		Martyn
-		Meowus
-		Mac
-		Morty
-		Monty
-	female
-		Moosiah
-		Masyah
-		Moorkah
-		Manyah
-		Meelcah
-		Masyanah
-		Matildah
-		Murkisah
-		Maroosiah
-		Martah
-		Murgauritah
-		Milah
-		Motiah
-		Majah
-		Moorah
-		Meekah
-		Marzelinah
-		Marjah
-		Mirah
-		Moolah
-		Murrah
-		Miah
+        male
+                Marsieck
+                Moorsieck
+                Murkees
+                Max
+                Marz
+                Marilyn
+                Musik
+                Mavreek
+                Markus
+                Micle
+                Majoer
+                Moorchick
+                Mozart
+                Moseek
+                Mathrohskeen
+                Meowzedong
+                Meethya
+                Michel
+                Martyn
+                Meowus
+                Mac
+                Morty
+                Monty
+        female
+                Moosiah
+                Masyah
+                Moorkah
+                Manyah
+                Meelcah
+                Masyanah
+                Matildah
+                Murkisah
+                Maroosiah
+                Martah
+                Murgauritah
+                Milah
+                Motiah
+                Majah
+                Moorah
+                Meekah
+                Marzelinah
+                Marjah
+                Mirah
+                Moolah
+                Murrah
+                Miah

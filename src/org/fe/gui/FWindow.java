@@ -64,7 +64,7 @@ public class FWindow extends FElement {
     private int message_timer;
     public FScene scene;
     private static boolean natives = false;
-    public static boolean double_pixels = true;
+    public static boolean double_pixels = false;
 
     public void setScene(FScene scene) {
         this.scene = scene;
@@ -133,8 +133,10 @@ public class FWindow extends FElement {
                             gdd.getDefaultConfiguration().getBounds().y + (gdd.getDefaultConfiguration().getBounds().height - (int) height) / 2);
                 }
             }
-            //Display.setDisplayMode(Display.getDesktopDisplayMode());
-            //Display.setFullscreen(true);
+            if (Main.SETTINGS.def("fullscreen").toBoolean(false)) {
+                Display.setDisplayMode(Display.getDesktopDisplayMode());
+                Display.setFullscreen(true);
+            }
             Display.setResizable(true);
             Display.setVSyncEnabled(true);
             Display.create();
@@ -204,7 +206,7 @@ public class FWindow extends FElement {
             if (s != null) {
                 int w = FFont.font.getWidth(s);
                 double mx = FMouse.x;
-                if (w + mx > width - 8) {
+                if ((w + mx) * (double_pixels ? 2 : 1) > width - 8) {
                     mx -= w + 8;
                 }
                 FColor.magenta.bind();

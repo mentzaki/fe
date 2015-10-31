@@ -17,15 +17,18 @@
 package org.fe.declaration;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.fe.Main;
 import static org.fe.Main.GRAPHICS;
 import org.fe.graphics.FColor;
 import org.fe.gui.*;
 import org.fe.main.FData;
 import org.fe.main.FLocale;
-import static org.fe.main.FLocale.set;
 import org.fe.main.FMusic;
 import org.fe.main.FSound;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 
 /**
  *
@@ -64,7 +67,7 @@ public class Scenes {
 
         };
 
-        public FPanel panel = new FPanel(-10, 0, 250, 240) {
+        public FPanel panel = new FPanel(-10, -32, 250, 240) {
 
             @Override
             public void init() {
@@ -215,8 +218,55 @@ public class Scenes {
 
         };
 
-        public FTuggleSwitch reducedViolence = new FTuggleSwitch(true, "settings.reducedviolence", 16, 200, 309);
-        public FTuggleSwitch particles = new FTuggleSwitch(true, "settings.particles", 325, 200, 309);
+        public FTuggleSwitch reducedViolence = new FTuggleSwitch(Main.SETTINGS.def("reducedviolence").toBoolean(false), "settings.reducedviolence", 16, 180, 309) {
+
+            @Override
+            public void valueChanged(boolean value) {
+                Main.SETTINGS.def("reducedviolence").setValue(value);
+            }
+
+        };
+        public FTuggleSwitch particles = new FTuggleSwitch(Main.SETTINGS.def("particles").toBoolean(true), "settings.particles", 325, 180, 309) {
+
+            @Override
+            public void valueChanged(boolean value) {
+                Main.SETTINGS.def("particles").setValue(value);
+            }
+
+        };
+
+        public FTuggleSwitch doublePixels = new FTuggleSwitch(Main.SETTINGS.def("doublepixels").toBoolean(false), "settings.doublepixels", 16, 230, 309) {
+
+            @Override
+            public void valueChanged(boolean value) {
+                FWindow.double_pixels = value;
+                Main.SETTINGS.def("doublepixels").setValue(value);
+            }
+
+        };
+
+        public FTuggleSwitch fullscreenMode = new FTuggleSwitch(Main.SETTINGS.def("fullscreen").toBoolean(false), "settings.fullscreen", 325, 230, 309){
+
+            @Override
+            public void valueChanged(boolean value) {
+                if(value){
+                    try {
+                        Display.setDisplayMode(Display.getDesktopDisplayMode());
+                        Display.setFullscreen(true);
+                    } catch (LWJGLException ex) {
+                        Logger.getLogger(Scenes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    try {
+                        Display.setFullscreen(false);
+                    } catch (LWJGLException ex) {
+                        Logger.getLogger(Scenes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                Main.SETTINGS.def("fullscreen").setValue(value);
+            }
+            
+        };
 
         @Override
         public void init() {
@@ -229,6 +279,8 @@ public class Scenes {
             panel.add(soundVolume);
             panel.add(reducedViolence);
             panel.add(particles);
+            panel.add(doublePixels);
+            panel.add(fullscreenMode);
             panel.add(controls);
             panel.add(language);
             panel.add(confirm);
@@ -284,9 +336,9 @@ public class Scenes {
         }
 
     };
-    
-    public static FScene CONTROLS = new FScene(){
-        
+
+    public static FScene CONTROLS = new FScene() {
+
         public FLabel title = new FLabel("settings.controls", 0, 15) {
 
             @Override
@@ -295,7 +347,7 @@ public class Scenes {
             }
 
         };
-        
+
         public FPanel panel = new FPanel(0, 0, 650, 300) {
 
             @Override
@@ -309,10 +361,10 @@ public class Scenes {
         @Override
         public void init() {
             add(panel);
-            
+
             panel.add(title);
         }
-        
+
         @Override
         public void render() {
             MAIN_MENU.width = width;

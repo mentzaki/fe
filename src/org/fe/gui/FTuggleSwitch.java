@@ -60,6 +60,7 @@ public class FTuggleSwitch extends FElement {
             }
             FSound.play("gui/long_beep");
             click(mx, my);
+            valueChanged(!value);
             value = !value;
             click = true;
         } else {
@@ -76,6 +77,10 @@ public class FTuggleSwitch extends FElement {
 
     @Override
     public void hover(double mx, double my) {
+    }
+    
+    public void valueChanged(boolean value){
+        
     }
 
     public String text() {

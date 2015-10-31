@@ -22,6 +22,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.declaration.Scenes;
+import org.fe.gui.FWindow;
 import org.fe.main.FData;
 import org.fe.main.FLocale;
 import org.fe.main.FSound;
@@ -50,6 +51,7 @@ public class Main {
         }else{
             SETTINGS = new FData(null);
         }
+        FWindow.double_pixels = SETTINGS.def("doublepixels").toBoolean(false);
         FLocale.init();
         Scenes.init();
     }

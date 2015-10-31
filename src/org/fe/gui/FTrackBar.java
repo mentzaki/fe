@@ -85,7 +85,7 @@ public class FTrackBar extends FElement {
         FBackground.BASIC_BACKGROUND.render(x() + x + 8, y() + 6, 64, 24);
         FFrame.BASIC_FRAME.render(x() + x, y(), 80, 40);
         int persent = (int)(value * 100f);
-        FFont.font.render(persent + "%", x() + x + 40, y() + 11, FAlignment.CENTER, FColor.black);
+        FFont.font.render(persent + "%", x() + x + 40, y() + 12, FAlignment.CENTER, FColor.black);
         FFont.font.render(persent + "%", x() + x + 40, y() + 11, FAlignment.CENTER, FColor.white);
         super.render();
     }

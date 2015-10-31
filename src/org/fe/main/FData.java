@@ -73,7 +73,7 @@ public class FData extends ArrayList<FData> {
                     String c3 = s[i + 1];
                     int j2 = 0;
                     for (; j2 < c3.length(); j2++) {
-                        if (c3.charAt(j) != ' ') {
+                        if (c3.charAt(j2) != ' ') {
                             break;
                         }
                     }
@@ -88,7 +88,6 @@ public class FData extends ArrayList<FData> {
                                 .replace("\\r", "r")
                                 .replace("\\t", "t")
                                 .replace("\\=", "=")
-                                .replace("\\`", "`")
                                 .replace("//\\\\//", "\\")), j);
                     }
                 } else {
