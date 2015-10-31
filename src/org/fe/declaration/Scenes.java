@@ -64,7 +64,7 @@ public class Scenes {
 
         };
 
-        public FPanel panel = new FPanel(-10, 0, 250, 300) {
+        public FPanel panel = new FPanel(-10, 0, 250, 240) {
 
             @Override
             public void init() {
@@ -84,7 +84,7 @@ public class Scenes {
             }
 
         };
-        public FButton exit = new FButton("mainmenu.exit", 10, 250, 230, 40) {
+        public FButton exit = new FButton("mainmenu.exit", 10, 190, 230, 40) {
 
             @Override
             public void click(double mx, double my) {
@@ -138,7 +138,7 @@ public class Scenes {
         public FLabel music = new FLabel("settings.music", 20, 35);
         public FLabel sound = new FLabel("settings.sound", 20, 105);
 
-        public FPanel panel = new FPanel(0, 0, 650, 450) {
+        public FPanel panel = new FPanel(0, 0, 650, 350) {
 
             @Override
             public void init() {
@@ -296,7 +296,7 @@ public class Scenes {
 
         };
         
-        public FPanel panel = new FPanel(0, 0, 650, 450) {
+        public FPanel panel = new FPanel(0, 0, 650, 300) {
 
             @Override
             public void init() {

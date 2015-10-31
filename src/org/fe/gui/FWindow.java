@@ -64,6 +64,7 @@ public class FWindow extends FElement {
     private int message_timer;
     public FScene scene;
     private static boolean natives = false;
+    public static boolean double_pixels = true;
 
     public void setScene(FScene scene) {
         this.scene = scene;
@@ -160,7 +161,7 @@ public class FWindow extends FElement {
                 glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
                 glClearColor(0, 0, 0, 0);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+                glOrtho(0, Display.getWidth() / (double_pixels ? 2 : 1), Display.getHeight() / (double_pixels ? 2 : 1), 0, 1, -1);
                 FMouse.update();
                 try {
                     render();
@@ -192,8 +193,8 @@ public class FWindow extends FElement {
                 scene.init();
                 scene.initialized = true;
             }
-            scene.width = width;
-            scene.height = height;
+            scene.width = width / (double_pixels ? 2 : 1);
+            scene.height = height / (double_pixels ? 2 : 1);
             scene.render();
             scene.handleHover(FMouse.x, FMouse.y);
             if (FMouse.leftReleased) {

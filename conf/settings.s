@@ -1,3 +1,3 @@
-music = 0.043252595
-sound = 0.7820069
+music = 0.061418686
+sound = 1.0
 locale = ru_RU

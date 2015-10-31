@@ -16,6 +16,7 @@
  */
 package org.fe.graphics;
 
+import static org.fe.gui.FWindow.double_pixels;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -31,11 +32,11 @@ public class FMouse {
     public static double dwheel;
 
     public static void update() {
-        dx = org.lwjgl.input.Mouse.getX() - x;
-        dy = Display.getHeight() - org.lwjgl.input.Mouse.getY() - y;
+        dx = (org.lwjgl.input.Mouse.getX() - x) / (double_pixels?2:1);
+        dy = (Display.getHeight() - org.lwjgl.input.Mouse.getY() - y) / (double_pixels?2:1);
         dwheel = (double) org.lwjgl.input.Mouse.getDWheel() / 500;
-        x = org.lwjgl.input.Mouse.getX();
-        y = Display.getHeight() - org.lwjgl.input.Mouse.getY();
+        x = (org.lwjgl.input.Mouse.getX()) / (double_pixels?2:1);
+        y = (Display.getHeight() - org.lwjgl.input.Mouse.getY()) / (double_pixels?2:1);
         leftReleased = left & !org.lwjgl.input.Mouse.isButtonDown(0);
         middleReleased = middle & !org.lwjgl.input.Mouse.isButtonDown(2);
         rightReleased = right & !org.lwjgl.input.Mouse.isButtonDown(1);

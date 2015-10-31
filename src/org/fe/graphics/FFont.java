@@ -199,6 +199,7 @@ public class FFont implements Serializable {
                 Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        t.setTextureFilter(GL_NEAREST);
         h = size * 3 / 2;
     }
 
