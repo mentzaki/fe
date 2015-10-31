@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fe.Main;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 
@@ -32,6 +33,8 @@ import org.newdawn.slick.openal.AudioLoader;
 public class FSound {
 
     public static float volume = 1;
+
+    private static boolean loaded = false;
 
     String path;
     Audio audio;
@@ -49,12 +52,14 @@ public class FSound {
 
     private void play(float vol) {
         if (audio != null) {
-            audio.playAsSoundEffect(volume * vol, volume * vol, false);
+            audio.playAsSoundEffect(1, volume * vol, false);
         }
     }
 
     public static void init() {
+        volume = Main.SETTINGS.def("sound").toFloat(0.5f);
         load(new File("res/sounds"), "");
+        loaded = true;
     }
 
     public static void play(String sound) {
@@ -62,9 +67,11 @@ public class FSound {
     }
 
     public static void play(String sound, float volume) {
-        for (FSound s : fs) {
-            if (s.path.equals(sound)) {
-                s.play(volume);
+        if (loaded) {
+            for (FSound s : fs) {
+                if (s.path.equals(sound)) {
+                    s.play(volume);
+                }
             }
         }
     }

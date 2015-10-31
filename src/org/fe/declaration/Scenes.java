@@ -17,10 +17,14 @@
 package org.fe.declaration;
 
 import java.io.File;
+import org.fe.Main;
 import static org.fe.Main.GRAPHICS;
 import org.fe.graphics.FColor;
 import org.fe.gui.*;
+import org.fe.main.FData;
 import org.fe.main.FLocale;
+import static org.fe.main.FLocale.set;
+import org.fe.main.FMusic;
 import org.fe.main.FSound;
 
 /**
@@ -148,6 +152,7 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
+                FData.toFile(Main.SETTINGS, new File("conf/settings.s"));
                 WINDOW.setScene(MAIN_MENU);
             }
 
@@ -163,7 +168,7 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
-                WINDOW.setScene(MAIN_MENU);
+                WINDOW.setScene(CONTROLS);
             }
 
             @Override
@@ -190,12 +195,22 @@ public class Scenes {
 
         };
 
-        public FTrackBar musicVolume = new FTrackBar(0.5f, 16, 55, 618);
-        public FTrackBar soundVolume = new FTrackBar(0.5f, 16, 125, 618) {
+        public FTrackBar musicVolume = new FTrackBar(Main.SETTINGS.def("music").toFloat(0.5f), 16, 55, 618) {
+
+            @Override
+            public void valueChanged(float value) {
+                FMusic.setVolume(value);
+                Main.SETTINGS.get("music").setValue(value);
+            }
+
+        };
+
+        public FTrackBar soundVolume = new FTrackBar(Main.SETTINGS.def("sound").toFloat(1.0f), 16, 125, 618) {
 
             @Override
             public void valueChanged(float value) {
                 FSound.volume = value;
+                Main.SETTINGS.get("sound").setValue(value);
             }
 
         };
@@ -238,7 +253,7 @@ public class Scenes {
             int y = 100;
             for (final File f : new File("locale").listFiles()) {
                 add(new FButton("gui/locale/" + f.getName(), null, 0, y, 148, 84) {
-                    String l = f.getName();
+                    final String l = f.getName();
 
                     @Override
                     public void init() {
@@ -248,6 +263,8 @@ public class Scenes {
                     @Override
                     public void click(double mx, double my) {
                         FLocale.set(l);
+                        Main.SETTINGS.def("locale").setValue(l);
+                        FData.toFile(Main.SETTINGS, new File("conf/settings.s"));
                         WINDOW.setScene(languageExitScene);
                     }
 
@@ -266,5 +283,44 @@ public class Scenes {
             super.render();
         }
 
+    };
+    
+    public static FScene CONTROLS = new FScene(){
+        
+        public FLabel title = new FLabel("settings.controls", 0, 15) {
+
+            @Override
+            public void init() {
+                horisontalAlignment = FAlignment.CENTER;
+            }
+
+        };
+        
+        public FPanel panel = new FPanel(0, 0, 650, 450) {
+
+            @Override
+            public void init() {
+                horisontalAlignment = FAlignment.CENTER;
+                verticalAlignment = FAlignment.CENTER;
+            }
+
+        };
+
+        @Override
+        public void init() {
+            add(panel);
+            
+            panel.add(title);
+        }
+        
+        @Override
+        public void render() {
+            MAIN_MENU.width = width;
+            MAIN_MENU.height = height;
+            MAIN_MENU.render();
+            GRAPHICS.setColor(new FColor(0, 0, 0, 100).slickColor());
+            GRAPHICS.fillRect(0, 0, (int) width, (int) height);
+            super.render();
+        }
     };
 }

@@ -50,6 +50,7 @@ import org.fe.Main;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FFont;
 import org.fe.graphics.FMouse;
+import org.fe.main.FMusic;
 import org.fe.main.FSound;
 
 /**
@@ -59,6 +60,8 @@ import org.fe.main.FSound;
 public class FWindow extends FElement {
 
     String title;
+    private String message;
+    private int message_timer;
     public FScene scene;
     private static boolean natives = false;
 
@@ -80,6 +83,7 @@ public class FWindow extends FElement {
             }
             try {
                 System.setProperty("java.library.path", new File("native").getAbsolutePath());
+                //System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
                 Field fieldSysPath = ClassLoader.class
                         .getDeclaredField("sys_paths");
                 fieldSysPath.setAccessible(
@@ -133,7 +137,7 @@ public class FWindow extends FElement {
             Display.setResizable(true);
             Display.setVSyncEnabled(true);
             Display.create();
-            FSound.init();
+            FMusic.init();
             FFont.font = new FFont("europe_ext", 0, 14);
             while (true) {
                 if (Display.isCloseRequested()) {
@@ -176,6 +180,9 @@ public class FWindow extends FElement {
         if (scene != null) {
             scene.handleTick();
         }
+        if (message_timer > 0) {
+            message_timer--;
+        }
     }
 
     @Override
@@ -204,6 +211,10 @@ public class FWindow extends FElement {
                 FFont.font.render(s, mx + 8, FMouse.y + 9, FColor.black);
                 FFont.font.render(s, mx + 8, FMouse.y + 8, FColor.white);
             }
+            if (message_timer > 0) {
+                FFont.font.render(message, 5, 6, FColor.black);
+                FFont.font.render(message, 5, 5, FColor.white);
+            }
         }
     }
 
@@ -225,6 +236,11 @@ public class FWindow extends FElement {
             }
         });
         ti.start();
+    }
+
+    public void addMessage(String string) {
+        this.message = string;
+        this.message_timer = 500;
     }
 
 }

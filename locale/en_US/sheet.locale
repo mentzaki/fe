@@ -1,5 +1,7 @@
 locale
 	name = English (United States)
+fmusic
+	nowplaying = Now playing:
 mainmenu
 	singleplayer = Singleplayer
 	multiplayer = Multiplayer
@@ -22,3 +24,54 @@ settings
 	controls = Controls
 	language = Language
 	confirm = Confirm
+controls
+	developers = Developer's panel
+	menu = Menu
+catnames
+	male
+		Marsieck
+		Moorsieck
+		Murkees
+		Max
+		Marz
+		Marilyn
+		Musik
+		Mavreek
+		Markus
+		Micle
+		Majoer
+		Moorchick
+		Mozart
+		Moseek
+		Mathrohskeen
+		Meowzedong
+		Meethya
+		Michel
+		Martyn
+		Meowus
+		Mac
+		Morty
+		Monty
+	female
+		Moosiah
+		Masyah
+		Moorkah
+		Manyah
+		Meelcah
+		Masyanah
+		Matildah
+		Murkisah
+		Maroosiah
+		Martah
+		Murgauritah
+		Milah
+		Motiah
+		Majah
+		Moorah
+		Meekah
+		Marzelinah
+		Marjah
+		Mirah
+		Moolah
+		Murrah
+		Miah

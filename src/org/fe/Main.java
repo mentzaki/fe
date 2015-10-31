@@ -16,8 +16,13 @@
  */
 package org.fe;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.fe.declaration.Scenes;
+import org.fe.main.FData;
 import org.fe.main.FLocale;
 import org.fe.main.FSound;
 import org.newdawn.slick.Graphics;
@@ -28,6 +33,7 @@ import org.newdawn.slick.Graphics;
  */
 public class Main {
 
+    public static FData SETTINGS;
     public static final Graphics GRAPHICS = new Graphics();
     public static final Random RANDOM = new Random();
 
@@ -35,6 +41,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if(new File("conf/settings.s").exists()){
+            try {
+                SETTINGS = FData.fromFile("conf/settings.s");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            SETTINGS = new FData(null);
+        }
         FLocale.init();
         Scenes.init();
     }

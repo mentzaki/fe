@@ -21,6 +21,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fe.Main;
 import org.fe.graphics.FImage;
 
 /**
@@ -79,6 +80,7 @@ public class FLocale {
         for (int i = 0; i < f.length; i++) {
             locales[i] = new FLocale(i, f[i].getName());
         }
+        set(Main.SETTINGS.def("locale").toString("en_US"));
     }
 
     protected int index;
@@ -88,9 +90,6 @@ public class FLocale {
     protected FLocale(int index, String name) {
         this.index = index;
         this.name = name;
-        if (name.equals("en_US")) {
-            currentLocale = defaultLocale = index;
-        }
         try {
             table = FData.fromFile(new File("locale/" + name + "/sheet.locale"));
         } catch (FileNotFoundException ex) {

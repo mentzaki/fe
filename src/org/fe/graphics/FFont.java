@@ -27,10 +27,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -56,6 +58,8 @@ public class FFont implements Serializable {
 
     private class ZhChar implements Serializable {
 
+        transient FFont f = null;
+
         int i;
         int w;
 
@@ -65,19 +69,23 @@ public class FFont implements Serializable {
         }
 
         public void render(int x, int y) {
-            glBegin(GL_QUADS);
-            {
-                glTexCoord2d(((double) (i) / t.getImageWidth()) * t.getWidth(), 0);
-                glVertex2d(x, y);
-                glTexCoord2d(((double) (i + w) / t.getImageWidth()) * t.getWidth(), 0);
-                glVertex2d(x + w, y);
-                glTexCoord2d(((double) (i + w) / t.getImageWidth()) * t.getWidth(), t.getHeight());
-                glVertex2d(x + w, y + h);
-                glTexCoord2d(((double) (i) / t.getImageWidth()) * t.getWidth(), t.getHeight());
-                glVertex2d(x, y + h);
-            }
-            glEnd();
+            FFont.render(this, f, x, y);
         }
+    }
+
+    private static void render(ZhChar c, FFont f, int x, int y) {
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2d(((double) (c.i) / f.t.getImageWidth()) * f.t.getWidth(), 0);
+            glVertex2d(x, y);
+            glTexCoord2d(((double) (c.i + c.w) / f.t.getImageWidth()) * f.t.getWidth(), 0);
+            glVertex2d(x + c.w, y);
+            glTexCoord2d(((double) (c.i + c.w) / f.t.getImageWidth()) * f.t.getWidth(), f.t.getHeight());
+            glVertex2d(x + c.w, y + f.h);
+            glTexCoord2d(((double) (c.i) / f.t.getImageWidth()) * f.t.getWidth(), f.t.getHeight());
+            glVertex2d(x, y + f.h);
+        }
+        glEnd();
     }
 
     public int h;
@@ -87,53 +95,111 @@ public class FFont implements Serializable {
     transient Graphics2D g;
     transient public byte[] bytes;
     public ZhChar[] ch = new ZhChar[(int) Character.MAX_VALUE];
-    transient Texture t;
+    Texture t;
     transient int lch = 0;
 
     public int getWidth(String line) {
         int w = 0;
         for (char c : line.toCharArray()) {
-            w += ch[(int) c].w;
+            if (ch[(int) c] != null) {
+                w += ch[(int) c].w;
+            }
         }
         return w;
     }
 
+    private String md5encode(String fontName, int style, int size) {
+        try {
+            String plaintext = fontName + "-" + style + "-" + size;
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(plaintext.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            String hashtext = bigInt.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public FFont(String fontName, int style, int size) {
-        char[] c = "1234567890ABCCDEFGHIJKLMNOPQRSTUVWXYZÜÖÄabcdefghijklmnopqrstuvwxyzüöäß`'[](){}<>:,-‒.?\";/|\\!@#$%^&*_ +-*=§АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
-        i = new BufferedImage(size * c.length, size * 3 / 2, BufferedImage.TYPE_4BYTE_ABGR);
-        System.out.println(i.getWidth() + ":" + i.getHeight());
-        g = (Graphics2D) i.getGraphics();
-        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_VRGB);
-        g.setColor(java.awt.Color.white);
-        File fileFont = new File("res/fonts/ttf/" + fontName + ".ttf");
-        if (fileFont.exists()) {
+        String md5 = md5encode(fontName, style, size);
+        File file = new File("res/fonts/ffont/" + md5);
+        if (file.exists()) {
             try {
-                f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fileFont)).deriveFont((float) size);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (FontFormatException ex) {
-                Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+                ch = new ZhChar[Character.MAX_VALUE];
+                ByteBuffer bb = ByteBuffer.wrap(FSerialization.readFromFile(file));
+                int l =  bb.getInt();
+                for (int j = 0; j < l; j++) {
+                    int character = bb.getInt();
+                    ZhChar c = new ZhChar(bb.getInt(), bb.getInt());
+                    ch[character] = c;
+                    ch[character].f = this;
+                }
+                bytes = FSerialization.readFromFile(new File("res/fonts/ffont/" + md5 + ".png"));
+                InputStream is = new ByteArrayInputStream(bytes);
+                t = TextureLoader.getTexture("PNG", is);
             } catch (IOException ex) {
                 Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            f = new Font(fontName, style, size);
+            char[] c = "1234567890ABCCDEFGHIJKLMNOPQRSTUVWXYZÜÖÄabcdefghijklmnopqrstuvwxyzüöäß`'[](){}<>:,-‒.?\";/|\\!@#$%^&*_ +-*=§АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
+            i = new BufferedImage(size * c.length, size * 3 / 2, BufferedImage.TYPE_4BYTE_ABGR);
+            g = (Graphics2D) i.getGraphics();
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_VRGB);
+            g.setColor(java.awt.Color.white);
+            File fileFont = new File("res/fonts/ttf/" + fontName + ".ttf");
+            if (fileFont.exists()) {
+                try {
+                    f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fileFont)).deriveFont((float) size);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FontFormatException ex) {
+                    Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                f = new Font(fontName, style, size);
+            }
+            g.setFont(f);
+            fm = g.getFontMetrics(f);
+            for (char j : c) {
+                renderChar(j);
+            }
+            try {
+                ByteArrayOutputStream os = new ByteArrayOutputStream(Short.MAX_VALUE);
+                new File("res/fonts/ffont/" + md5 + ".png").createNewFile();
+                FileOutputStream fos = new FileOutputStream(new File("res/fonts/ffont/" + md5 + ".png"));
+                ImageIO.write(i, "png", os);
+                ImageIO.write(i, "png", fos);
+                bytes = os.toByteArray();
+                InputStream is = new ByteArrayInputStream(bytes);
+                t = TextureLoader.getTexture("PNG", is);
+            } catch (IOException ex) {
+                Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ByteBuffer bb = ByteBuffer.allocate(c.length * 12 + 4);
+                bb.putInt(c.length);
+                for (int j = 0; j < c.length; j++) {
+                    if (ch[(int) c[j]] != null) {
+                        bb.putInt((int) c[j]);
+                        bb.putInt(ch[(int) c[j]].i);
+                        bb.putInt(ch[(int) c[j]].w);
+                    }
+                }
+                FSerialization.writeToFile(bb.array(), file);
+            } catch (IOException ex) {
+                Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        g.setFont(f);
-        fm = g.getFontMetrics(f);
         h = size * 3 / 2;
-        for (char j : c) {
-            renderChar(j);
-        }
-        try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream(Short.MAX_VALUE);
-            ImageIO.write(i, "png", os);
-            bytes = os.toByteArray();
-            InputStream is = new ByteArrayInputStream(bytes);
-            t = TextureLoader.getTexture("PNG", is);
-        } catch (IOException ex) {
-            Logger.getLogger(FFont.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void renderChar(char c) {
@@ -141,21 +207,30 @@ public class FFont implements Serializable {
             int w = fm.charWidth(c);
             g.drawString(c + "", lch, f.getSize());
             ch[(int) c] = new ZhChar(lch, w);
+            ch[(int) c].f = this;
             lch += w;
         }
     }
 
-    public void render(String string, double x, double y, FColor color) {
+    public void render(Object o, double x, double y, FColor color) {
+        if (o == null) {
+            return;
+        }
+        String string = o.toString();
         color.bind();
         t.bind();
         for (char c : string.toCharArray()) {
             ZhChar z = ch[(int) c];
-            z.render((int)x, (int)y);
+            z.render((int) x, (int) y);
             x += z.w;
         }
     }
 
-    public void render(String string, double x, double y, FAlignment align, FColor color) {
+    public void render(Object o, double x, double y, FAlignment align, FColor color) {
+        if (o == null) {
+            return;
+        }
+        String string = o.toString();
         color.bind();
         t.bind();
         if (align == FAlignment.CENTER) {
@@ -165,7 +240,7 @@ public class FFont implements Serializable {
         }
         for (char c : string.toCharArray()) {
             ZhChar z = ch[(int) c];
-            z.render((int)x, (int)y);
+            z.render((int) x, (int) y);
             x += z.w;
         }
     }

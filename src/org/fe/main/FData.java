@@ -18,8 +18,12 @@ package org.fe.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FData extends ArrayList<FData> {
 
@@ -129,6 +133,22 @@ public class FData extends ArrayList<FData> {
         return s;
     }
 
+    public static File toFile(FData fdata, File file) {
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(file, "UTF8");
+            for (String s : toString(fdata).split("\n")) {
+                pw.println(s);
+            }
+            pw.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FData.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return file;
+    }
+
     public FData(String name, Object value) {
         this.name = name;
         this.value = value;
@@ -161,11 +181,30 @@ public class FData extends ArrayList<FData> {
     public FData get(String name) {
         for (int i = 0; i < size(); i++) {
             FData sc = get(i);
-            if (sc.name.equals(name)) {
+            if (name.equals(sc.name)) {
                 return sc;
             }
         }
         return new FData(name);
+    }
+    
+    public boolean contains(String name){
+        if(name == null)return false;
+        for (int i = 0; i < size(); i++) {
+            FData sc = get(i);
+            if (name.equals(sc.name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public FData def(String name) {
+        FData sc = get(name);
+        if (!contains(name)) {
+            add(sc);
+        }
+        return sc;
     }
 
     public FData set(String name, Object value) {
