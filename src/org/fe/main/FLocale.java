@@ -41,6 +41,10 @@ public class FLocale {
             }
         }
     }
+    
+    public static FData getAsData() {
+        return locales[currentLocale].table;
+    }
 
     public static String get(String key) {
         if (key == null) {

@@ -16,6 +16,7 @@
  */
 package org.fe.graphics;
 
+import org.fe.main.FData;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -23,6 +24,8 @@ import org.lwjgl.input.Keyboard;
  * @author yew_mentzaki
  */
 public class FKeyboard {
+    
+    public static FData CONTROLS = new FData(null);
 
     public static final int EVENT_SIZE = 18;
     public static final int CHAR_NONE = 0;

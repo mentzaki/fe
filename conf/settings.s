@@ -1,7 +1,7 @@
 music = 0.0
-sound = 0.75605536
+sound = 1.0
 locale = en_US
 doublepixels = false
-reducedviolence = false
-particles = true
+reducedviolence = true
+particles = false
 fullscreen = false

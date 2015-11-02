@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.Main;
 import static org.fe.Main.GRAPHICS;
+import org.fe.gameplay.space.Space;
 import org.fe.graphics.FColor;
 import org.fe.gui.*;
 import org.fe.main.FData;
@@ -77,7 +78,15 @@ public class Scenes {
 
         };
 
-        public FButton singleplayer = new FButton("mainmenu.singleplayer", 10, 10, 230, 40);
+        public FButton singleplayer = new FButton("mainmenu.singleplayer", 10, 10, 230, 40){
+
+            @Override
+            public void click(double mx, double my) {
+               WINDOW.setScene(new Space());
+            }
+            
+        };
+        
         public FButton multiplayer = new FButton("mainmenu.multiplayer", 10, 60, 230, 40);
         public FButton settings = new FButton("mainmenu.settings", 10, 110, 230, 40) {
 
@@ -348,12 +357,28 @@ public class Scenes {
 
         };
 
-        public FPanel panel = new FPanel(0, 0, 650, 300) {
+        public FPanel panel = new FPanel(0, 0, 650, 350) {
 
             @Override
             public void init() {
                 horisontalAlignment = FAlignment.CENTER;
                 verticalAlignment = FAlignment.CENTER;
+            }
+
+        };
+        
+        public FButton confirm = new FButton("settings.confirm", -15, -15, 150, 40) {
+
+            @Override
+            public void click(double mx, double my) {
+                FData.toFile(Main.SETTINGS, new File("conf/controls.s"));
+                WINDOW.setScene(SETTINGS);
+            }
+
+            @Override
+            public void init() {
+                horisontalAlignment = FAlignment.RIGHT;
+                verticalAlignment = FAlignment.BOTTOM;
             }
 
         };
@@ -363,6 +388,7 @@ public class Scenes {
             add(panel);
 
             panel.add(title);
+            panel.add(confirm);
         }
 
         @Override

@@ -16,6 +16,7 @@
  */
 package org.fe.gui;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import org.fe.main.FLocale;
  *
  * @author yew_mentzaki
  */
-public class FElement extends ArrayList<FElement> {
+public class FElement extends ArrayList<FElement> implements Serializable{
 
     public FElement() {
     }

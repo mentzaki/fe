@@ -3,8 +3,8 @@ locale
 fmusic
         nowplaying = Now playing:
 mainmenu
-        singleplayer = Singleplayer
-        multiplayer = Multiplayer
+        continue = Continue
+        newgame = New Game
         settings = Settings 
         exit = Exit
         language = Language
@@ -29,6 +29,32 @@ settings
 controls
         developers = Developer's panel
         menu = Menu
+history
+        yearsago = years ago.
+        now = Now.
+        history
+                With the black hole gravity influence the cluster
+                of 51 stars fell out of the Great Galaxy and
+                became other one.
+                Yep.
+                It's actually our Galaxy.
+                We're alone here.
+                Really.
+                They are sending signals from Great Galaxy to us,
+                But we divided by space in millions of light-years.
+                And millions of years they're waiting to receive message.
+                We're waiting too.
+                It's terrible.
+                Galaxy's small. It's no resources here.
+                Like on Cebrah, second planet of Cater.
+                The homeworld you left.
+                It's too many people and too few resources.
+                It's cat civilization destiny.
+                But we must stay strong...
+                So,
+                Do you want to be ruler on this garbage ship?
+                Prepare well for the journey, Space Captain.
+                ...
 catnames
         male
                 Marsieck
@@ -77,3 +103,56 @@ catnames
                 Moolah
                 Murrah
                 Miah
+stars
+        Cater
+        Ryshon
+        Shenie
+        Shleeshy
+        Khameeshy
+        Sheeshy
+        Sabbat
+        Khochmah
+        Binah
+        Kheced
+        Gboorah
+        Tiphaeret
+        Netzah
+        Hod
+        Jeceod
+        Malchut
+        Halewie
+        Ashlag
+        Aleph
+        Bet
+        Ghimel
+        Dalet
+        Hej
+        Waw
+        Zajin
+        Khet
+        Thet
+        Jood
+        Caph
+        Lamed
+        Mem
+        Noon
+        Cemech
+        Ajin
+        Pej
+        Tsadee
+        Qooph
+        Reish
+        Sheen
+        Taw
+        Neesan
+        Lyar
+        Sewan
+        Tammooz
+        Ab
+        Elool
+        Teshree
+        Murkheshwal
+        Chisleaw
+        Tebet
+        Sheabath
+        Adar
