@@ -49,6 +49,7 @@ import org.newdawn.slick.Color;
 import org.fe.Main;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FFont;
+import org.fe.graphics.FKeyboard;
 import org.fe.graphics.FMouse;
 import org.fe.main.FMusic;
 import org.fe.main.FSound;
@@ -165,6 +166,7 @@ public class FWindow extends FElement {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glOrtho(0, Display.getWidth() / (double_pixels ? 2 : 1), Display.getHeight() / (double_pixels ? 2 : 1), 0, 1, -1);
                 FMouse.update();
+                FKeyboard.update(this);
                 try {
                     render();
                 } catch (Exception e) {

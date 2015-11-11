@@ -16,6 +16,7 @@
  */
 package org.fe.gameplay.space;
 
+import org.fe.declaration.Scenes;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FFont;
 import org.fe.graphics.FMouse;
@@ -73,6 +74,9 @@ public class Space extends FScene {
 
     @Override
     public void tick() {
+        for (int i = 0; i < 51; i++) {
+            stars[i].tick();
+        }
         if (text < text_length) {
             text_timer--;
             if (text_timer == 0) {
@@ -101,7 +105,11 @@ public class Space extends FScene {
             }
         }
         if(index != -1){
-            return FLocale.getAsData().get("stars").get(stars[index].name - 1).toString();
+            if(FMouse.leftReleased){
+                stars[index].starSystem.space = this;
+                Scenes.WINDOW.setScene(stars[index].starSystem);
+            }
+            return stars[index].getName();
         }
         return super.toolTip(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -143,6 +151,8 @@ public class Space extends FScene {
         }
         super.render();
     }
+    
+    
 
     public void grow() {
         spacespeed--;

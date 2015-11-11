@@ -16,6 +16,7 @@
  */
 package org.fe.graphics;
 
+import org.fe.gui.FWindow;
 import org.fe.main.FData;
 import org.lwjgl.input.Keyboard;
 
@@ -24,8 +25,10 @@ import org.lwjgl.input.Keyboard;
  * @author yew_mentzaki
  */
 public class FKeyboard {
-    
+
     public static FData CONTROLS = new FData(null);
+
+    private static boolean type;
 
     public static final int EVENT_SIZE = 18;
     public static final int CHAR_NONE = 0;
@@ -166,10 +169,19 @@ public class FKeyboard {
 
     private static final boolean kd[] = new boolean[KEYBOARD_SIZE];
 
-    public static void update() {
+    public static void update(FWindow w) {
+        type = false;
         for (int i = 0; i < KEYBOARD_SIZE; i++) {
             kd[i] = Keyboard.isKeyDown(i);
+            if (kd[i]) {
+                type = true;
+                w.handleKeyPress(i);
+            }
         }
+    }
+
+    public static boolean isAnyKeyDown() {
+        return type;
     }
 
     public static boolean isKeyDown(int i) {

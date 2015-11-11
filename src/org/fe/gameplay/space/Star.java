@@ -17,15 +17,17 @@
 package org.fe.gameplay.space;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import org.fe.Main;
 import org.fe.graphics.FImage;
+import org.fe.main.FLocale;
 import org.newdawn.slick.Color;
 
 /**
  *
  * @author fax
  */
-public class Star implements Serializable {
+public class Star extends SpaceLocation implements Serializable {
 
     static float GRAVITATIONAL_CONSTANT = 50;
 
@@ -40,10 +42,13 @@ public class Star implements Serializable {
     };
 
     int name;
-    double mass;
+    StarSystem starSystem = new StarSystem(this);
+    double mass, system_size;
     int color;
     double x, y;
     double vx, vy;
+    
+    public ArrayList<SpaceLocation> sl = new ArrayList<SpaceLocation>();
 
     public Star(int name) {
         this.name = name;
@@ -69,7 +74,11 @@ public class Star implements Serializable {
                 this.y = (1 + Main.RANDOM.nextFloat()) * GALAXY_SIZE / 3;
             }
         }
-
+        for (int i = 0; i < Main.RANDOM.nextInt(13) + 3; i++) {
+            Planet p = new Planet(this, i);
+            sl.add(p);
+            system_size = p.orbitRadius * 2;
+        }
     }
 
     public void countVelocity(Star[] stars) {
@@ -91,6 +100,12 @@ public class Star implements Serializable {
             vy += ay;
         }
     }
+    
+    public void tick(){
+        for (SpaceLocation s : sl) {
+            s.tick();
+        }
+    }
 
     public void applyVelocity() {
         x += vx;
@@ -101,6 +116,11 @@ public class Star implements Serializable {
         if (name != 1 || Main.RANDOM.nextBoolean()) {
             STARS[color].draw((float) (x / GALAXY_SIZE * width - STARS[color].getWidth()/2), (float) (y / GALAXY_SIZE * height - STARS[color].getHeight()/2));
         }
+    }
+
+    @Override
+    public String getName() {
+        return FLocale.getAsData().get("stars").get(name - 1).toString();
     }
 
 }
