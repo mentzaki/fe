@@ -22,6 +22,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.declaration.Scenes;
+import org.fe.gameplay.network.NetworkConnection;
+import org.fe.gameplay.types.Types;
 import org.fe.gui.FWindow;
 import org.fe.main.FData;
 import org.fe.main.FLocale;
@@ -33,10 +35,11 @@ import org.newdawn.slick.Graphics;
  * @author yew_mentzaki
  */
 public class Main {
-
+    
     public static FData SETTINGS;
     public static final Graphics GRAPHICS = new Graphics();
     public static final Random RANDOM = new Random();
+    public static final int DEVICE_INDEX = RANDOM.nextInt(Integer.MAX_VALUE);
 
     /**
      * @param args the command line arguments
@@ -54,6 +57,8 @@ public class Main {
         FWindow.double_pixels = SETTINGS.def("doublepixels").toBoolean(false);
         FLocale.init();
         Scenes.init();
+        NetworkConnection.init();
+        Types.init();
     }
 
 }

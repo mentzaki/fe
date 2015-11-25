@@ -3,6 +3,8 @@ locale
 fmusic
         nowplaying = Now playing:
 mainmenu
+        singleplayer = Singleplayer
+        multiplayer = Multiplayer
         continue = Continue
         newgame = New Game
         settings = Settings 
@@ -14,6 +16,7 @@ skirmish
         faction = Faction
         color = Color
         ready = Ready
+        left = Left the lobby
 settings
         settings = Settings
         music = Music volume:
@@ -29,131 +32,7 @@ settings
 controls
         developers = Developer's panel
         menu = Menu
-history
-        homeworld = Cebrah
-        yearsago = years ago.
-        now = Now.
-        history
-                With the black hole gravity influence the cluster
-                of 51 stars fell out of the Great Galaxy and
-                became other one.
-                Yep.
-                It's actually our Galaxy.
-                We're alone here.
-                Really.
-                They are sending signals from Great Galaxy to us,
-                But we divided by space in millions of light-years.
-                And millions of years they're waiting to receive message.
-                We're waiting too.
-                It's terrible.
-                Galaxy's small. It's no resources here.
-                Like on Cebrah, second planet of Cater.
-                The homeworld you left.
-                It's too many people and too few resources.
-                It's cat civilization destiny.
-                But we must stay strong...
-                So,
-                Do you want to be ruler on this garbage ship?
-                Prepare well for the journey, Space Captain.
-                ...
-catnames
-        male
-                Marsieck
-                Moorsieck
-                Murkees
-                Max
-                Marz
-                Marilyn
-                Musik
-                Mavreek
-                Markus
-                Micle
-                Majoer
-                Moorchick
-                Mozart
-                Moseek
-                Mathrohskeen
-                Meowzedong
-                Meethya
-                Michel
-                Martyn
-                Meowus
-                Mac
-                Morty
-                Monty
-        female
-                Moosiah
-                Masyah
-                Moorkah
-                Manyah
-                Meelcah
-                Masyanah
-                Matildah
-                Murkisah
-                Maroosiah
-                Martah
-                Murgauritah
-                Milah
-                Motiah
-                Majah
-                Moorah
-                Meekah
-                Marzelinah
-                Marjah
-                Mirah
-                Moolah
-                Murrah
-                Miah
-stars
-        Cater
-        Ryshon
-        Shenie
-        Shleeshy
-        Khameeshy
-        Sheeshy
-        Sabbat
-        Khochmah
-        Binah
-        Kheced
-        Gboorah
-        Tiphaeret
-        Netzah
-        Hod
-        Jeceod
-        Malchut
-        Halewie
-        Ashlag
-        Aleph
-        Bet
-        Ghimel
-        Dalet
-        Hej
-        Waw
-        Zajin
-        Khet
-        Thet
-        Jood
-        Caph
-        Lamed
-        Mem
-        Noon
-        Cemech
-        Ajin
-        Pej
-        Tsadee
-        Qooph
-        Reish
-        Sheen
-        Taw
-        Neesan
-        Lyar
-        Sewan
-        Tammooz
-        Ab
-        Elool
-        Teshree
-        Murkheshwal
-        Chisleaw
-        Tebet
-        Sheabath
-        Adar
+errors
+        err0 = No request found
+        err1 = Unknown request
+        err2 = Problems with the database

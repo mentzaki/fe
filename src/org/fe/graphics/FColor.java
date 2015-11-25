@@ -1,8 +1,7 @@
 package org.fe.graphics;
 
-
-
 import java.io.Serializable;
+import static java.lang.Math.pow;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -55,12 +54,43 @@ public class FColor implements Serializable {
         this.a = 1f;
     }
 
+    public FColor(int v) {
+        int a = (v) & 0xFF;
+        int r = (v >> 8) & 0xFF;
+        int g = (v >> 16) & 0xFF;
+        int b = (v >> 24) & 0xFF;
+        
+        this.r = 1f - (float) r / 255f;
+        this.g = 1f - (float) g / 255f;
+        this.b = 1f - (float) b / 255f;
+        this.a = 1f - (float) a / 255f;
+    }
+
+    public int getV() {
+        int alpha = Math.round(255 * a);
+        int red = Math.round(255 * r);
+        int green = Math.round(255 * g);
+        int blue = Math.round(255 * b);
+
+        alpha = (alpha << 24) & 0xFF000000;
+        red = (red << 16) &     0x00FF0000;
+        green = (green << 8) &  0x0000FF00;
+        blue = blue &           0x000000FF;
+
+        return alpha | red | green | blue;
+    }
+
     public void bind() {
         GL11.glColor4f(r, g, b, a);
     }
 
     public org.newdawn.slick.Color slickColor() {
         return new org.newdawn.slick.Color(r, g, b, a);
+    }
+
+    @Override
+    public String toString() {
+        return "org.fe.graphics.FColor(" + r + ", " + g + ", " + b + ", " + a + ")";
     }
 
 }

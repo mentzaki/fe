@@ -34,7 +34,7 @@ public class FElement extends ArrayList<FElement> implements Serializable{
     }
 
     boolean initialized;
-
+    
     public String toolTip;
     public FElement parent;
     public double x, y, width, height;

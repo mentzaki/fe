@@ -17,16 +17,23 @@
 package org.fe.declaration;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.Main;
 import static org.fe.Main.GRAPHICS;
+import org.fe.gameplay.network.Client;
+import org.fe.gameplay.network.FClient;
+import org.fe.gameplay.network.FServer;
+import org.fe.gameplay.network.Lobby;
+import org.fe.gameplay.network.NetworkConnection;
 import org.fe.gameplay.network.Server;
 import org.fe.graphics.FColor;
 import org.fe.gui.*;
 import org.fe.main.FData;
 import org.fe.main.FLocale;
 import org.fe.main.FMusic;
+import org.fe.main.FNetworkSerialization;
 import org.fe.main.FSound;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -82,12 +89,22 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
-                Server server = new Server();
+                FServer fs = new FServer(21115, 1);
+                FClient fc = new FClient(FColor.magenta, "localhost", 21115);
             }
 
         };
 
-        public FButton multiplayer = new FButton("mainmenu.multiplayer", 10, 60, 230, 40);
+        public FButton multiplayer = new FButton("mainmenu.multiplayer", 10, 60, 230, 40) {
+
+            @Override
+            public void click(double mx, double my) {
+                Lobby lobby = new Lobby();
+                WINDOW.setScene(lobby);
+            }
+
+        };
+
         public FButton settings = new FButton("mainmenu.settings", 10, 110, 230, 40) {
 
             @Override

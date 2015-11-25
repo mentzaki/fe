@@ -32,8 +32,14 @@ public class FLocale {
 
     protected static int currentLocale, defaultLocale;
     protected static FLocale[] locales;
+    protected static String localeName;
+
+    public static String getLocaleName() {
+        return localeName;
+    }
 
     public static void set(String locale) {
+        localeName = locale;
         for (FLocale f : locales) {
             if (f.name.equals(locale)) {
                 currentLocale = f.index;
@@ -41,7 +47,7 @@ public class FLocale {
             }
         }
     }
-    
+
     public static FData getAsData() {
         return locales[currentLocale].table;
     }
