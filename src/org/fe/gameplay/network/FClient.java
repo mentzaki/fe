@@ -26,6 +26,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import org.fe.Main;
+import org.fe.declaration.Scenes;
+import org.fe.gameplay.world.Player;
+import org.fe.gameplay.world.World;
 import org.fe.graphics.FColor;
 
 /**
@@ -34,10 +37,18 @@ import org.fe.graphics.FColor;
  */
 public class FClient {
 
+    ChatRoom chatRoom = new ChatRoom(this);
+
+    World world;
+
     DatagramSocket socket;
 
     InetAddress ip;
     int port;
+
+    String message = "";
+
+    int timer;
 
     FColor color;
 
@@ -65,8 +76,7 @@ public class FClient {
             Logger.getLogger(FClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     Thread thread = new Thread(toString() + " receiver") {
 
         @Override
@@ -93,7 +103,6 @@ public class FClient {
         }
     });
 
-
     private void init(String ip, int port) throws Exception {
         this.ip = InetAddress.getByName(ip);
         this.port = port;
@@ -109,11 +118,23 @@ public class FClient {
         }
         thread.start();
         thread2.start();
+        Scenes.WINDOW.setScene(chatRoom);
     }
-    
+
     public void send() throws Exception {
         FByteBuffer bb = new FByteBuffer();
-        bb.putByte((byte)1);
+        bb.putByte((byte) 2);
+        bb.putInt(Main.DEVICE_INDEX);
+        bb.putBytes(message.getBytes());
+        DatagramPacket p = new DatagramPacket(bb.toByteArray(), bb.size(), ip, port);
+        if (timer > 0) {
+            timer--;
+            if (timer == 0) {
+                message = "";
+            }
+        }
+
+        socket.send(p);
     }
 
     public void receiveDatagram() throws Exception {
@@ -121,8 +142,29 @@ public class FClient {
         socket.receive(p);
         byte[] b = new byte[p.getLength()];
         System.arraycopy(receiveBuffer, 0, b, 0, p.getLength());
-        FByteBuffer fbb = new FByteBuffer(b);
-        
+        FByteBuffer bb = new FByteBuffer(b);
+        int type = bb.getByte();
+        if (type == 1) {
+            int mes = bb.getInt();
+            String message = new String(bb.getBytes());
+            if (message.length() > 0) {
+                chatRoom.addMessage(mes, message);
+            }
+            int seed = bb.getInt();
+            int gametype = bb.getByte();
+            if (world == null) {
+                world = new World(gametype, seed);
+            }
+            int players = bb.getByte();
+            for (int i = 0; i < players; i++) {
+                world.playerHandler[i] = new Player(
+                        new FColor(bb.getInt()),
+                        new String(bb.getBytes()),
+                        bb.getByte(),
+                        i
+                );
+            }
+        }
     }
 
 }

@@ -55,6 +55,33 @@ public class NetworkUtils {
         }
     }
 
+    public static void punch() {
+        FData fd = null;
+        try {
+            String s = NetworkConnection.network.get("punch").toString();
+
+            URL u = new URL(s);
+            HttpURLConnection c;
+            c = (HttpURLConnection) u.openConnection();
+
+            URLConnection conn;
+            conn = u.openConnection();
+            c.setRequestMethod("GET");
+            c.setDoOutput(true);
+            c.connect();
+            String receivedString = new String();
+            Scanner scanner = new Scanner(c.getInputStream());
+            while (scanner.hasNextLine()) {
+                receivedString += scanner.nextLine() + '\n';
+            }
+            scanner.close();
+            c.disconnect();
+            System.out.println(receivedString);
+        } catch (ProtocolException ex) {
+        } catch (IOException ex) {
+        }
+    }
+
     public static FData request(String... args) {
         FData fd = null;
         try {

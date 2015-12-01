@@ -5,3 +5,4 @@ doublepixels = false
 reducedviolence = false
 particles = true
 fullscreen = false
+nickname = noob

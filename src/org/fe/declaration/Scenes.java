@@ -25,10 +25,13 @@ import static org.fe.Main.GRAPHICS;
 import org.fe.gameplay.network.Client;
 import org.fe.gameplay.network.FClient;
 import org.fe.gameplay.network.FServer;
+import org.fe.gameplay.network.ChatRoom;
 import org.fe.gameplay.network.Lobby;
 import org.fe.gameplay.network.NetworkConnection;
 import org.fe.gameplay.network.Server;
 import org.fe.graphics.FColor;
+import org.fe.graphics.FFont;
+import org.fe.graphics.FKeyboard;
 import org.fe.gui.*;
 import org.fe.main.FData;
 import org.fe.main.FLocale;
@@ -36,6 +39,7 @@ import org.fe.main.FMusic;
 import org.fe.main.FNetworkSerialization;
 import org.fe.main.FSound;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -45,7 +49,7 @@ import org.lwjgl.opengl.Display;
 public class Scenes {
 
     public static void init() {
-        WINDOW = new FWindow("ForcedEngine", 800, 600);
+        WINDOW = new FWindow("Forces", 800, 600);
         WINDOW.create();
 
         WINDOW.setScene(MAIN_MENU);
@@ -55,21 +59,32 @@ public class Scenes {
 
     public static FScene MAIN_MENU = new FScene() {
 
-        public FPicture background = new FPicture("gui/background", 0, 0, 800, 800) {
+        public FPicture background = new FPicture("gui/background", 0, 0, 1920, 1440) {
+
+            @Override
+            public void init() {
+                horisontalAlignment = verticalAlignment = FAlignment.CENTER;
+            }
 
             @Override
             public void render() {
-                width = WINDOW.width;
-                height = WINDOW.height;
-                super.render();
+                if(FWindow.double_pixels){
+                    width = 960;
+                    height = 720;
+                }else{
+                    width = 1920;
+                    height = 1440;
+                }
+                super.render(); //To change body of generated methods, choose Tools | Templates.
             }
 
         };
 
-        public FPicture logo = new FPicture("gui/logo", 0, 0, 375, 150) {
+        public FPicture logo = new FPicture("gui/logo", 0, -25, 615, 172) {
 
             @Override
             public void init() {
+                horisontalAlignment = FAlignment.CENTER;
                 verticalAlignment = FAlignment.BOTTOM;
             }
 
@@ -89,8 +104,6 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
-                FServer fs = new FServer(21115, 1);
-                FClient fc = new FClient(FColor.magenta, "localhost", 21115);
             }
 
         };
@@ -416,6 +429,86 @@ public class Scenes {
             GRAPHICS.setColor(new FColor(0, 0, 0, 100).slickColor());
             GRAPHICS.fillRect(0, 0, (int) width, (int) height);
             super.render();
+        }
+    };
+
+    public static FScene SIGN_UP = new FScene() {
+
+        String chars = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm_-1234567890";
+        String yourMessage = "";
+        int clr = 0;
+        double d;
+
+        @Override
+        public void tick() {
+            if (FKeyboard.isKeyDown(Keyboard.KEY_BACK) && yourMessage.length() > 0 && clr-- < 0) {
+                yourMessage = yourMessage.substring(0, yourMessage.length() - 1);
+                clr = 7;
+            }
+            if (FKeyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+                Main.SETTINGS.set("nickname", yourMessage);
+                FData.toFile(Main.SETTINGS, "conf/settings.s");
+                Scenes.WINDOW.setScene(MAIN_MENU);
+            }
+            d += 0.08;
+        }
+
+        public FPanel panel = new FPanel(0, 0, 650, 90) {
+
+            @Override
+            public void init() {
+                horisontalAlignment = FAlignment.CENTER;
+                verticalAlignment = FAlignment.CENTER;
+            }
+
+            @Override
+            public void render() {
+                super.render();
+                FBackground.BASIC_BACKGROUND.render(x() + 20, y() + 40, 610, 30, FColor.black);
+                FFrame.BASIC_FRAME.render(x() + 16, y() + 35, 618, 40);
+            }
+
+        };
+
+        public FLabel title = new FLabel("mainmenu.introduce", 0, 15) {
+
+            @Override
+            public void init() {
+                horisontalAlignment = FAlignment.CENTER;
+            }
+
+        };
+
+        @Override
+        public void init() {
+            add(panel);
+
+            panel.add(title);
+
+            MAIN_MENU.init();
+            MAIN_MENU.initialized = true;
+        }
+
+        @Override
+        public void render() {
+            MAIN_MENU.width = width;
+            MAIN_MENU.height = height;
+            MAIN_MENU.render();
+            GRAPHICS.setColor(new FColor(0, 0, 0, 100).slickColor());
+            GRAPHICS.fillRect(0, 0, (int) width, (int) height);
+            if (Keyboard.next()) {
+                if (Keyboard.getEventKey() == Keyboard.KEY_BACK) {
+
+                } else if (Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
+                   
+                } else if (yourMessage.length() < 30) {
+                    char c = Keyboard.getEventCharacter();
+                    if(chars.indexOf(c) != -1)
+                    yourMessage += c;
+                }
+            }
+            super.render();
+            FFont.font.render(yourMessage + (Math.cos(d)>0?"|":""), panel.x() + 325, panel.y() + 45, FAlignment.CENTER, FColor.white);
         }
     };
 }

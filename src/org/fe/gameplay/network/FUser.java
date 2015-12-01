@@ -29,13 +29,20 @@ public class FUser {
     int deviceIndex, port;
     String name;
     FColor color;
-
+    
+    long time;
+    
+    public void punch(){
+        this.time = System.currentTimeMillis();
+    }
+    
     public FUser(InetAddress address, int port, int deviceIndex, String name, FColor color) {
         this.address = address;
         this.port = port;
         this.deviceIndex = deviceIndex;
         this.name = name;
         this.color = color;
+        this.time = System.currentTimeMillis();
         System.out.println("Connected new user:");
         System.out.println("    " + address.getHostAddress() + ":" + port);
         System.out.println("    " + deviceIndex);

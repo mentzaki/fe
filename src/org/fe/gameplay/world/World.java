@@ -36,7 +36,7 @@ public class World extends FScene implements Serializable {
     
     Terrain terrain;
     
-    Player playerHandler[];
+    public Player playerHandler[];
     public int seed;
 
     public World(int players) {

@@ -15,8 +15,13 @@ skirmish
         team = Команда
         faction = Сторона
         color = Цвет
-        ready = Готовность
-        left = Покинуть лобби
+        ready = Готово
+        left = Назад
+        local = Только локальная сеть
+        host = Создавать сервер
+server
+        joined = Игрок %0 присоединился к игре.
+        left Игрок %0 вышел из игры.
 settings
         settings = Настройки
         music = Громкость музыки:

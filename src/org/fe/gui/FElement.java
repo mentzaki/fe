@@ -33,7 +33,7 @@ public class FElement extends ArrayList<FElement> implements Serializable{
     public FElement() {
     }
 
-    boolean initialized;
+    public boolean initialized;
     
     public String toolTip;
     public FElement parent;
@@ -108,7 +108,7 @@ public class FElement extends ArrayList<FElement> implements Serializable{
     }
 
     public void init() {
-
+        
     }
 
     public String toolTip() {

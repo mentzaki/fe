@@ -75,15 +75,18 @@ public class NetworkConnection {
 
             @Override
             public void run() {
-                initNetworkConnection();
+                try {
+                    initNetworkConnection();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(NetworkConnection.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
         };
         t.start();
     }
 
-    public static void initNetworkConnection() {
-        
+    public static void initNetworkConnection() throws FileNotFoundException {
+        network = FData.fromFile("conf/network.s");
     }
 
 }

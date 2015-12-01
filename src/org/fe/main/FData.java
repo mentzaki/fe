@@ -132,6 +132,10 @@ public class FData extends ArrayList<FData> {
         return s;
     }
 
+    public static File toFile(FData fdata, String file) {
+        return toFile(fdata, new File(file));
+    }
+
     public static File toFile(FData fdata, File file) {
         PrintWriter pw;
         try {
@@ -186,9 +190,11 @@ public class FData extends ArrayList<FData> {
         }
         return new FData(name);
     }
-    
-    public boolean contains(String name){
-        if(name == null)return false;
+
+    public boolean contains(String name) {
+        if (name == null) {
+            return false;
+        }
         for (int i = 0; i < size(); i++) {
             FData sc = get(i);
             if (name.equals(sc.name)) {
@@ -197,7 +203,7 @@ public class FData extends ArrayList<FData> {
         }
         return false;
     }
-    
+
     public FData def(String name) {
         FData sc = get(name);
         if (!contains(name)) {

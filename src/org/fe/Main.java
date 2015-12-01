@@ -22,6 +22,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.declaration.Scenes;
+import static org.fe.declaration.Scenes.SIGN_UP;
+import static org.fe.declaration.Scenes.WINDOW;
 import org.fe.gameplay.network.NetworkConnection;
 import org.fe.gameplay.types.Types;
 import org.fe.gui.FWindow;
@@ -35,7 +37,7 @@ import org.newdawn.slick.Graphics;
  * @author yew_mentzaki
  */
 public class Main {
-    
+
     public static FData SETTINGS;
     public static final Graphics GRAPHICS = new Graphics();
     public static final Random RANDOM = new Random();
@@ -45,13 +47,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if(new File("conf/settings.s").exists()){
+        if (new File("conf/settings.s").exists()) {
             try {
                 SETTINGS = FData.fromFile("conf/settings.s");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             SETTINGS = new FData(null);
         }
         FWindow.double_pixels = SETTINGS.def("doublepixels").toBoolean(false);
@@ -59,6 +61,11 @@ public class Main {
         Scenes.init();
         NetworkConnection.init();
         Types.init();
+        if (Main.SETTINGS.get("nickname").toString().equals("noob")) {
+            WINDOW.setScene(SIGN_UP);
+        }else{
+            System.out.println(Main.SETTINGS.get("nickname").toString()); 
+        }
     }
 
 }

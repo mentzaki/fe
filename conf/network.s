@@ -1,4 +1,6 @@
 host = http://forces.su/fe/
+punch = http://forces.su/punch/
+punch_server = 31.170.164.223:21115
 port = 20543
 stun
         stun.fwdnet.net

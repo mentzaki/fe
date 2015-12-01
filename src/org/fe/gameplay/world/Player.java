@@ -24,14 +24,17 @@ import org.fe.graphics.FColor;
  */
 public class Player {
     FColor color;
+    String name;
     int faction;
     int index;
 
-    public Player(FColor color, int faction, int index) {
+    public Player(FColor color, String name, int faction, int index) {
         this.color = color;
+        this.name = name;
         this.faction = faction;
         this.index = index;
     }
+
     
     public void tick(){
         

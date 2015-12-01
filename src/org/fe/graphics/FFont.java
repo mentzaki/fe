@@ -134,7 +134,7 @@ public class FFont implements Serializable {
             try {
                 ch = new ZhChar[Character.MAX_VALUE];
                 ByteBuffer bb = ByteBuffer.wrap(FSerialization.readFromFile(file));
-                int l =  bb.getInt();
+                int l = bb.getInt();
                 for (int j = 0; j < l; j++) {
                     int character = bb.getInt();
                     ZhChar c = new ZhChar(bb.getInt(), bb.getInt());
@@ -222,8 +222,10 @@ public class FFont implements Serializable {
         t.bind();
         for (char c : string.toCharArray()) {
             ZhChar z = ch[(int) c];
-            z.render((int) x, (int) y);
-            x += z.w;
+            if (z != null) {
+                z.render((int) x, (int) y);
+                x += z.w;
+            }
         }
     }
 
@@ -241,8 +243,10 @@ public class FFont implements Serializable {
         }
         for (char c : string.toCharArray()) {
             ZhChar z = ch[(int) c];
+            if(z != null){
             z.render((int) x, (int) y);
             x += z.w;
+            }
         }
     }
 

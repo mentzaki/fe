@@ -16,9 +16,13 @@
  */
 package org.fe.gameplay.network;
 
+import com.sun.org.apache.bcel.internal.generic.F2D;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.fe.Main;
 import static org.fe.Main.GRAPHICS;
+import org.fe.declaration.Scenes;
 import static org.fe.declaration.Scenes.MAIN_MENU;
 import static org.fe.declaration.Scenes.WINDOW;
 import org.fe.graphics.FColor;
@@ -28,7 +32,10 @@ import org.fe.gui.FColorSwitchBar;
 import org.fe.gui.FPanel;
 import org.fe.gui.FPicture;
 import org.fe.gui.FScene;
+import org.fe.gui.FSwitchButton;
+import org.fe.gui.FTuggleSwitch;
 import org.fe.main.FData;
+import org.fe.main.FNetworkSerialization;
 
 /**
  *
@@ -36,7 +43,7 @@ import org.fe.main.FData;
  */
 public class Lobby extends FScene {
 
-    private Server server;
+    private FServer server;
 
     public void updateServerList() {
         FData fd = NetworkUtils.request("r", "list");
@@ -74,7 +81,22 @@ public class Lobby extends FScene {
 
         @Override
         public void click(double mx, double my) {
-            server = new Server(8);
+            Thread t = new Thread(){
+
+                @Override
+                public void run() {
+                   NetworkUtils.punch();
+                }
+                
+            };
+            t.start();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            server = new FServer(21115, 1);
+            FClient c = new FClient(new FColor(red.value, green.value, blue.value), "localhost", 21115);
         }
 
         @Override
@@ -151,6 +173,16 @@ public class Lobby extends FScene {
 
     };
 
+    public FTuggleSwitch host = new FTuggleSwitch(false, "skirmish.host", 0, -15, 300) {
+
+        @Override
+        public void init() {
+            horisontalAlignment = FAlignment.CENTER;
+            verticalAlignment = FAlignment.BOTTOM;
+        }
+
+    };
+
     @Override
     public void init() {
         add(panel);
@@ -163,8 +195,7 @@ public class Lobby extends FScene {
 
         panel.add(preview);
         panel.add(preview_team);
-
-        updateServerList();
+        panel.add(host);
     }
 
     @Override

@@ -3,6 +3,7 @@ locale
 fmusic
         nowplaying = Now playing:
 mainmenu
+        introduce = Introduce yourself:
         singleplayer = Singleplayer
         multiplayer = Multiplayer
         continue = Continue
@@ -16,7 +17,12 @@ skirmish
         faction = Faction
         color = Color
         ready = Ready
-        left = Left the lobby
+        left = Back
+        local = Only on LAN
+        host = Host the server
+server
+        joined = %0 joined the game.
+        left %0 left the game.
 settings
         settings = Settings
         music = Music volume:

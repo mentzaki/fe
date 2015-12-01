@@ -26,7 +26,7 @@ import org.fe.graphics.FColor;
  * @author fax
  */
 public class FClientHandler {
-
+    
     FServer server;
     DatagramPacket d;
     FByteBuffer b;
@@ -40,43 +40,41 @@ public class FClientHandler {
     public void handle() throws IOException {
         int type = b.getByte();
         if (type == 1) {
-            if(server.users.size() < server.players){
+            if (server.users.size() < server.players) {
+                int deviceIndex = b.getInt();
+                for (int i = 0; i < server.users.size(); i++) {
+                    if (server.users.get(i).deviceIndex == deviceIndex) {
+                        return;
+                    }
+                }
+                String name = new String(b.getBytes());
+                int v = b.getInt();
+
+                server.users.add(
+                        new FUser(d.getAddress(), d.getPort(), deviceIndex, name, new FColor(v))
+                );
+                server.setMessage("#joined " + name);
+            } else {
+                b.clear();
+                b.putByte((byte) 91);
+                server.socket.send(new DatagramPacket(b.toByteArray(), b.size(), d.getAddress(), d.getPort()));
+            }
+        } else if (type == 2) {
+            FUser user = null;
             int deviceIndex = b.getInt();
-           
             for (int i = 0; i < server.users.size(); i++) {
                 if (server.users.get(i).deviceIndex == deviceIndex) {
-                    return;
+                    user = server.users.get(i);
+                    break;
                 }
             }
-            String name = new String(b.getBytes());
-            int v = b.getInt();
-            
-            server.users.add(
-                    new FUser(d.getAddress(), d.getPort(), deviceIndex, name, new FColor(v))
-            );
-            }else{
-                b.clear();
-                b.putByte((byte)91);
-                server.socket.send(new DatagramPacket(b.toByteArray(), b.size()));
+            if (user == null) {
+                return;
             }
+            user.punch();
+            server.setMessage(new String(b.getBytes()));
+            
         }
-
-        /*
-        
-       
-         for (int i = 0; i < 5; i++) {
-         socket = new DatagramSocket();
-         FByteBuffer bb = new FByteBuffer();
-         bb.putByte((byte) 1);
-         bb.putInt(Main.DEVICE_INDEX);
-         bb.putFloat(color.r);
-         bb.putFloat(color.g);
-         bb.putFloat(color.b);
-         DatagramPacket dp = new DatagramPacket(bb.toByteArray(), bb.size(), this.ip, port);
-         socket.send(dp);
-         }
-        
-         */
     }
 
 }

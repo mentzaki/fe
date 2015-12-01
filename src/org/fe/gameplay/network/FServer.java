@@ -18,10 +18,13 @@ package org.fe.gameplay.network;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,9 +39,14 @@ import org.fe.graphics.FColor;
 public class FServer {
 
     int players;
-    
+
+    String message = "";
+
     ArrayList<FUser> users = new ArrayList<FUser>();
     ArrayList<FClientHandler> fch = new ArrayList<FClientHandler>();
+
+    int mes = 0;
+    int timer = 0;
 
     int port = 21115;
     int bufferSize = 2048;
@@ -86,7 +94,6 @@ public class FServer {
         }
     });
 
-
     public FServer(int port, int player) {
         players = player;
         this.world = new World(player);
@@ -99,6 +106,30 @@ public class FServer {
         thread.start();
         thread2.start();
         thread3.start();
+        try {
+            DatagramPacket p = new DatagramPacket(new byte[]{1, 1, 1, 1}, 4,
+                    InetAddress.getByName(NetworkConnection.network.get("punch_server").toString().split(":")[0]),
+                    Integer.parseInt(NetworkConnection.network.get("punch_server").toString().split(":")[1])
+            );
+            System.out.println(p.getAddress());
+            System.out.println(p.getPort());
+            for (int i = 0; i < 10; i++) {
+                socket.send(p);
+            }
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public void setMessage(String message) {
+        if (!this.message.equals(message)) {
+            mes++;
+            this.message = message;
+            timer = 10;
+        }
     }
 
     public void handle() throws Exception {
@@ -108,11 +139,46 @@ public class FServer {
             f.handle();
         }
     }
-    
+
     public void send() throws Exception {
+        String message = this.message;
+        if (timer > 0) {
+            timer--;
+            if (timer == 0) {
+                this.message = "";
+            }
+        }
         for (int i = 0; i < users.size(); i++) {
             FUser user = users.get(i);
-            
+            FByteBuffer b = new FByteBuffer();
+            /* String message = new String(bb.getBytes());
+             int seed = bb.getInt();
+             int gametype = bb.getByte();
+             world = new World(gametype, seed);
+             int players = bb.getByte();
+             for (int i = 0; i < players; i++) {
+             world.playerHandler[i] = new Player(
+             new FColor(bb.getInt()),
+             new String(bb.getBytes()),
+             bb.getByte(),
+             i
+             );
+             }*/
+            b.putByte((byte) 1);
+            b.putInt(mes);
+            b.putBytes(message.getBytes());
+            b.putInt(world.seed);
+            b.putByte((byte) players);
+            b.putByte((byte) users.size());
+            for (int j = 0; j < users.size(); j++) {
+                FUser u = users.get(j);
+                b.putInt(u.color.getV());
+                b.putBytes(u.name.getBytes());
+                b.putByte((byte) 1);
+                b.putByte((byte) j);
+            }
+            DatagramPacket p = new DatagramPacket(b.toByteArray(), b.size(), user.address, user.port);
+            socket.send(p);
         }
     }
 
