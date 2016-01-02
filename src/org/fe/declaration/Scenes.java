@@ -29,6 +29,7 @@ import org.fe.gameplay.network.ChatRoom;
 import org.fe.gameplay.network.Lobby;
 import org.fe.gameplay.network.NetworkConnection;
 import org.fe.gameplay.network.Server;
+import org.fe.gameplay.world.World;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FFont;
 import org.fe.graphics.FKeyboard;
@@ -104,6 +105,7 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
+                WINDOW.setScene(new World(1));
             }
 
         };

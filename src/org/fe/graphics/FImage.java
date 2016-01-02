@@ -95,6 +95,7 @@ public class FImage implements Serializable {
                     if (image == null) {
                         if (new File("res/textures/" + path).exists()) {
                             image = new org.newdawn.slick.Image("res/textures/" + path);
+                            System.out.println(path + " is loaded!");
                         } else {
                             throw new FileNotFoundException("res/textures/" + path);
                         }

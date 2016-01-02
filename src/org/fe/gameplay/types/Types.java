@@ -18,8 +18,7 @@ package org.fe.gameplay.types;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.fe.gameplay.types.entities.WillRhodes;
-
+import org.fe.gameplay.types.entities.KaiseratMammutidae;
 /**
  *
  * @author fax
@@ -46,7 +45,7 @@ public class Types {
 
     public static void initEntityTypes() {
         entityTypes.add(Entity.class);
-        entityTypes.add(WillRhodes.class);
+        entityTypes.add(KaiseratMammutidae.class);
 
     }
 }

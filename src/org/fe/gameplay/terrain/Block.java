@@ -16,7 +16,7 @@
  */
 package org.fe.gameplay.terrain;
 
-import org.fe.graphics.FColor;
+import java.io.File;
 import org.fe.graphics.FImage;
 
 /**
@@ -24,60 +24,32 @@ import org.fe.graphics.FImage;
  * @author fax
  */
 public class Block {
-    public static final int width = 64, height = 64;
-    private static int current_block_index;
-    public FColor color;
-    public static Block[] blocks = new Block[128];
-    boolean solid;
-    int index;
-    public FImage main, left_top, right_top, left_bottom, right_bottom;
 
-    public Block(boolean solid, int r, int g, int b) {
-        color = new FColor(r, g, b);
-        index = current_block_index++;
-        blocks[index] = this;
-        this.solid = solid;
+    static final int WIDTH = 64, HEIGHT = 32;
+    
+    FImage fi;
+    public boolean passable = true, water;
+
+    public Block() {
     }
-
-    public Block(String texture, boolean solid, int r, int g, int b) {
-        color = new FColor(r, g, b);
-        index = current_block_index++;
-        blocks[index] = this;
-        this.solid = solid;
-        texture = "tiles/" + texture;
-        main = new FImage(texture + "/main");
-        left_top = new FImage(texture + "/left_top");
-        right_top = new FImage(texture + "/right_top");
-        left_bottom = new FImage(texture + "/left_bottom");
-        right_bottom = new FImage(texture + "/right_bottom");
-    }
-
-    public void render(int x, int y) {
-        main.draw(x * width, y * height / 2);
-    }
-
-    public void expand(int x, int y, int fx, int fy) {
-        if (right_top != null) {
-            if (fx >= x) {
-                if (fy >= y) {
-                    right_bottom.draw(x * width, y * height / 2);
-                }
-                if (fy <= y) {
-                    right_top.draw(x * width, y * height / 2);
-                }
-            }
-            if (fx <= x) {
-                if (fy >= y) {
-                    left_bottom.draw(x * width, y * height / 2);
-                }
-                if (fy <= y) {
-                    left_top.draw(x * width, y * height / 2);
-                }
-            }
+    
+    public void render(int x, int y, int tick){
+        if(fi != null){
+            fi.draw(x * WIDTH, y * HEIGHT);
         }
     }
 
-    public void update() {
+    public void init(File f) {
+        if (f.isFile()) {
+            fi = new FImage(
+                    f.getAbsolutePath().substring(
+                            new File("res/textures").getAbsolutePath().length() + 1
+                    ).replace(".png", "")
+            );
+        } else {
+
+        }
 
     }
+
 }

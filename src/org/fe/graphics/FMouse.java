@@ -29,17 +29,21 @@ public class FMouse {
     public static double dx, dy;
     public static boolean left, middle, right;
     public static boolean leftReleased, middleReleased, rightReleased;
+    public static boolean leftPressed, middlePressed, rightPressed;
     public static double dwheel;
 
     public static void update() {
-        dx = (org.lwjgl.input.Mouse.getX() - x) / (double_pixels?2:1);
-        dy = (Display.getHeight() - org.lwjgl.input.Mouse.getY() - y) / (double_pixels?2:1);
+        dx = (org.lwjgl.input.Mouse.getX() - x * (double_pixels ? 2 : 1)) / (double_pixels ? 2 : 1);
+        dy = (Display.getHeight() - org.lwjgl.input.Mouse.getY() - y * (double_pixels ? 2 : 1)) / (double_pixels ? 2 : 1);
         dwheel = (double) org.lwjgl.input.Mouse.getDWheel() / 500;
-        x = (org.lwjgl.input.Mouse.getX()) / (double_pixels?2:1);
-        y = (Display.getHeight() - org.lwjgl.input.Mouse.getY()) / (double_pixels?2:1);
+        x = (org.lwjgl.input.Mouse.getX()) / (double_pixels ? 2 : 1);
+        y = (Display.getHeight() - org.lwjgl.input.Mouse.getY()) / (double_pixels ? 2 : 1);
         leftReleased = left & !org.lwjgl.input.Mouse.isButtonDown(0);
         middleReleased = middle & !org.lwjgl.input.Mouse.isButtonDown(2);
         rightReleased = right & !org.lwjgl.input.Mouse.isButtonDown(1);
+        leftPressed = !left & org.lwjgl.input.Mouse.isButtonDown(0);
+        middlePressed = !middle & org.lwjgl.input.Mouse.isButtonDown(2);
+        rightPressed = !right & org.lwjgl.input.Mouse.isButtonDown(1);
         left = org.lwjgl.input.Mouse.isButtonDown(0);
         middle = org.lwjgl.input.Mouse.isButtonDown(2);
         right = org.lwjgl.input.Mouse.isButtonDown(1);

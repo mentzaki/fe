@@ -23,7 +23,12 @@ import java.util.logging.Logger;
 import org.fe.Main;
 import org.fe.gameplay.terrain.Terrain;
 import org.fe.gameplay.types.Entity;
+import org.fe.gameplay.types.entities.KaiseratMammutidae;
+import org.fe.graphics.FKeyboard;
+import org.fe.graphics.FMouse;
 import org.fe.gui.FScene;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 
 /**
  *
@@ -31,28 +36,31 @@ import org.fe.gui.FScene;
  */
 public class World extends FScene implements Serializable {
 
-    int player = -1;
+    int player = 0;
     int players;
-    
-    Terrain terrain;
-    
+
+    public Terrain terrain;
+
     public Player playerHandler[];
     public int seed;
+
+    public int selectX, selectY, selectX2, selectY2;
+    public int cameraX, cameraY;
 
     public World(int players) {
         this.players = players;
         this.seed = Main.RANDOM.nextInt(Integer.MAX_VALUE);
-        this.terrain = new Terrain(players * 64 + 64, id * 64 + 64, 
-                seed);
+        this.terrain = new Terrain();
         this.playerHandler = new Player[players];
     }
-    
+
     public World(int players, int seed) {
         this.players = players;
         this.seed = seed;
-        this.terrain = new Terrain(players * 64 + 64, id * 64 + 64, seed);
+        this.terrain = new Terrain();
         this.playerHandler = new Player[players];
     }
+
     public void add(Class clazz, double x, double y, double z, double a, int owner) {
         try {
             Entity e = (Entity) clazz.newInstance();
@@ -63,7 +71,8 @@ public class World extends FScene implements Serializable {
             e.z = z;
             e.a = a;
             e.owner = owner;
-            indexedEntities.set(e.id, e);
+            indexedEntities.add(e);
+            e.id = indexedEntities.size() - 1;
             entities.add(e);
         } catch (InstantiationException ex) {
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,32 +89,98 @@ public class World extends FScene implements Serializable {
     private int id;
     private ArrayList<Entity> indexedEntities = new ArrayList<Entity>(),
             entities = new ArrayList<Entity>();
-    
-    public Entity getEntity(int id){
+
+    @Override
+    public void handleHover(double mx, double my) {
+        if (FMouse.leftPressed) {
+            selectX = selectX2 = (int) (mx + cameraX);
+            selectY = selectY2 = (int) (my * 2 + cameraY);
+        }
+        if (FMouse.left) {
+            selectX2 = (int) (mx + cameraX);
+            selectY2 = (int) (my * 2 + cameraY);
+        }
+        if (FMouse.leftReleased) {
+            for (Entity e : getEntities()) {
+                if (e.x - e.width / 2 <= Math.max(selectX, selectX2)
+                        && e.x + e.width / 2 >= Math.min(selectX, selectX2)
+                        && e.y - e.width / 2 <= Math.max(selectY, selectY2)
+                        && e.y + e.width / 2 >= Math.min(selectY, selectY2)) {
+                    e.selected = e.owner == player && e.selectable;
+                } else if (!(FKeyboard.isKeyDown(FKeyboard.KEY_LSHIFT)
+                        || FKeyboard.isKeyDown(FKeyboard.KEY_RSHIFT))) {
+                    e.selected = false;
+                }
+            }
+            selectX = selectX2 = 0;
+            selectY = selectY2 = 0;
+
+        }
+        if (FMouse.middle) {
+            cameraX -= FMouse.dx;
+            cameraY -= FMouse.dy * 2;
+        }
+        if (FMouse.rightReleased) {
+            for (Entity e : getEntities()) {
+                if (e.selected) {
+                    for (int i = 0; i < 50; i++) {
+                        e.goTo((int) (mx + cameraX), (int) (my * 2 + cameraY));
+
+                    }
+                }
+            }
+        }
+        super.hover(mx, my);
+    }
+
+    public Entity getEntity(int id) {
         return indexedEntities.get(id);
     }
-    
-    public Entity[] getEntities(){
+
+    public Entity[] getEntities() {
         Entity e[] = new Entity[entities.size()];
         for (int i = 0; i < e.length; i++) {
             e[i] = entities.get(i);
         }
         return e;
     }
-    
+
     @Override
-    public void tick(){
+    public void init() {
+        super.init();
+
+        add(KaiseratMammutidae.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
+        add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
+        add(KaiseratMammutidae.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+
+    }
+
+    @Override
+    public void tick() {
         Entity[] ent = getEntities();
-        for(Entity e : ent){
+        for (Entity e : ent) {
             e.tick(ent);
         }
     }
-    
+
     @Override
-    public void render(){
+    public void render() {
+        int cameraX = this.cameraX, cameraY = this.cameraY;
+        GL11.glTranslated(-cameraX, -cameraY / 2, 0);
+        terrain.render(cameraX, cameraY / 2, (int) width, (int) height);
         Entity[] ent = getEntities();
-        for(Entity e : ent){
+        for (Entity e : ent) {
             e.render();
         }
+        if (FMouse.left) {
+            Main.GRAPHICS.setColor(Color.white);
+            Main.GRAPHICS.drawRect(selectX,
+                    (selectY) / 2,
+                    selectX2 - selectX,
+                    (selectY2 - selectY) / 2
+            );
+        }
+        GL11.glTranslated(cameraX, cameraY / 2, 0);
+        super.render();
     }
 }
