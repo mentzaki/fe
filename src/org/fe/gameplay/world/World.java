@@ -16,8 +16,10 @@
  */
 package org.fe.gameplay.world;
 
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.Main;
@@ -120,15 +122,96 @@ public class World extends FScene implements Serializable {
             cameraX -= FMouse.dx;
             cameraY -= FMouse.dy * 2;
         }
+        ArrayList<Entity> move = new ArrayList<Entity>();
         if (FMouse.rightReleased) {
             for (Entity e : getEntities()) {
                 if (e.selected) {
-                    for (int i = 0; i < 50; i++) {
-                        e.goTo((int) (mx + cameraX), (int) (my * 2 + cameraY));
-
-                    }
+                    move.add(e);
                 }
             }
+        }
+        ArrayList<Point> point = new ArrayList<Point>();
+        int dir = 0;
+        int length = 1;
+        int steps = 1;
+        int px, py;
+        int tx = px = (int) (mx + cameraX), ty = py = (int) (my * 2 + cameraY);
+        tx /= 64;
+        ty /= 64;
+        while (point.size() < move.size()) {
+            if (tx >= 0
+                    && ty >= 0
+                    && tx < terrain.width
+                    && ty < terrain.height
+                    && terrain.getTile(tx, ty).passable) {
+                point.add(new Point(tx * 64 + 32, ty * 64 + 32));
+            }else{
+            }
+            switch (dir) {
+                case 0:
+                    tx++;
+                    steps--;
+                    if (steps == 0) {
+                        dir = 1;
+                        steps = length;
+                    }
+                    break;
+                case 1:
+                    ty++;
+                    steps--;
+                    if (steps == 0) {
+                        dir = 2;
+                        length++;
+                        steps = length;
+                    }
+                    break;
+                case 2:
+                    tx--;
+                    steps--;
+                    if (steps == 0) {
+                        dir = 3;
+                        steps = length;
+                    }
+                    break;
+                case 3:
+                    ty--;
+                    steps--;
+                    if (steps == 0) {
+                        dir = 0;
+                        length++;
+                        steps = length;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        while (move.size() > 0) {
+            Entity en = null;
+            Point pn = null;
+            int dist = 0;
+            for (Entity e : move) {
+                int d = (int) Math.sqrt(
+                        Math.pow(e.x - px, 2)
+                        + Math.pow(e.y - py, 2));
+                if(d >= dist){
+                    dist = d;
+                    en = e;
+                }
+            }
+            dist = Integer.MAX_VALUE;
+            for (Point p : point) {
+                int d = (int) Math.sqrt(
+                        Math.pow(en.x - p.x, 2)
+                        + Math.pow(en.y - p.y, 2));
+                if(d <= dist){
+                    dist = d;
+                    pn = p;
+                }
+            }
+           en.goTo(pn.x, pn.y);
+           move.remove(en);
+           point.remove(pn);
         }
         super.hover(mx, my);
     }
@@ -148,10 +231,11 @@ public class World extends FScene implements Serializable {
     @Override
     public void init() {
         super.init();
-
-        add(KaiseratMammutidae.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
-        add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
-        add(KaiseratMammutidae.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+        for (int i = 0; i < 30; i++) {
+            add(KaiseratMammutidae.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
+            add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
+            add(KaiseratMammutidae.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+        }
 
     }
 
@@ -169,6 +253,7 @@ public class World extends FScene implements Serializable {
         GL11.glTranslated(-cameraX, -cameraY / 2, 0);
         terrain.render(cameraX, cameraY / 2, (int) width, (int) height);
         Entity[] ent = getEntities();
+        Arrays.sort(ent);
         for (Entity e : ent) {
             e.render();
         }

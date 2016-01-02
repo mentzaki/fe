@@ -25,10 +25,10 @@ import org.fe.gameplay.types.Chassis;
  */
 public class Terrain {
 
-    byte[][] tiles;
-    int width, height;
+    private byte[][] tiles;
+    public int width, height;
 
-    Biome biome;
+    public Biome biome;
 
     public Terrain() {
 

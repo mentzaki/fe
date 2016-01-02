@@ -27,7 +27,7 @@ import org.newdawn.slick.Color;
  */
 public class KaiseratMammutidae extends Entity{
     
-    FImage[] stands={
+    static FImage[] stands={
         new FImage("entities/kaiserat/mammutidae/stand/0"),
         new FImage("entities/kaiserat/mammutidae/stand/1"),
         new FImage("entities/kaiserat/mammutidae/stand/2"),
@@ -38,7 +38,7 @@ public class KaiseratMammutidae extends Entity{
         new FImage("entities/kaiserat/mammutidae/stand/7")
     };
 
-    FImage[] stands_team={
+    static FImage[] stands_team={
         new FImage("entities/kaiserat/mammutidae/stand/0_team"),
         new FImage("entities/kaiserat/mammutidae/stand/1_team"),
         new FImage("entities/kaiserat/mammutidae/stand/2_team"),

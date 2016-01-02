@@ -29,7 +29,7 @@ import org.fe.graphics.FImage;
  *
  * @author fax
  */
-public abstract class Entity implements Serializable {
+public abstract class Entity implements Serializable, Comparable<Entity> {
 
     public int id, type, owner;
     public double x, y, z, a;
@@ -37,6 +37,7 @@ public abstract class Entity implements Serializable {
     public int _own_tx = -1, _own_ty;
     public int _own_target;
     public float speed = 1.5f;
+    public transient int mileage;
     public transient boolean selected, selectable = true, stoped;
     public transient Point[] way;
     public transient int currentPoint = 0;
@@ -96,7 +97,7 @@ public abstract class Entity implements Serializable {
 
                         i._own_tx = (ex + dx) * 64 + 32;
                         i._own_ty = (ey + dy) * 64 + 32;
-                    } else if(!i.stoped) {
+                    } else if (!i.stoped) {
                         stoped = true;
                     }
                 }
@@ -105,6 +106,7 @@ public abstract class Entity implements Serializable {
                 if (d > speed) {
                     x += speed * Math.cos(a);
                     y += speed * Math.sin(a);
+                    mileage += speed;
                 } else {
                     x = _own_tx;
                     y = _own_ty;
@@ -117,8 +119,19 @@ public abstract class Entity implements Serializable {
                         _own_ty = -1;
                         way = null;
                     }
+                    mileage += d;
                 }
             }
+        }
+    }
+
+    public int compareTo(Entity t) {
+        if (t.y < y) {
+            return 1;
+        } else if (t.y > y) {
+            return -1;
+        } else {
+            return 0;
         }
     }
 
@@ -277,10 +290,6 @@ public abstract class Entity implements Serializable {
             frame[5].draw(x - 8 - width / 2, y / 2 - 8 - height);
             frame[6].draw(x - 8, y / 2 + width / 4 - 8 - height);
             frame[7].draw(x - 8 + width / 2, y / 2 - 8 - height);
-        }
-
-        if (_own_tx == -1) {
-            Main.GRAPHICS.fillRect((int) x + width / 2, (int) y / 2 + width / 4, 10, 10);
         }
     }
 
