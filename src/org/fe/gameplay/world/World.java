@@ -23,9 +23,11 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.Main;
+import org.fe.gameplay.terrain.Block;
 import org.fe.gameplay.terrain.Terrain;
 import org.fe.gameplay.types.Entity;
 import org.fe.gameplay.types.entities.KaiseratMammutidae;
+import org.fe.gameplay.types.entities.KaiseratStiletto;
 import org.fe.graphics.FKeyboard;
 import org.fe.graphics.FMouse;
 import org.fe.gui.FScene;
@@ -52,7 +54,7 @@ public class World extends FScene implements Serializable {
     public World(int players) {
         this.players = players;
         this.seed = Main.RANDOM.nextInt(Integer.MAX_VALUE);
-        this.terrain = new Terrain();
+        this.terrain = new Terrain("skirmish_0.map");
         this.playerHandler = new Player[players];
     }
 
@@ -119,8 +121,24 @@ public class World extends FScene implements Serializable {
 
         }
         if (FMouse.middle) {
-            cameraX -= FMouse.dx;
-            cameraY -= FMouse.dy * 2;
+            int cx = cameraX;
+            int cy = cameraY;
+            cx -= FMouse.dx;
+            cy -= FMouse.dy * 2;
+            if (cx < 0) {
+                cx = 0;
+            }
+            if (cy < 0) {
+                cy = 0;
+            }
+            if (cx + width >= terrain.width * Block.WIDTH) {
+                cx = (int) (terrain.width * Block.WIDTH - width);
+            }
+            if (cy + height * 2 >= terrain.height * Block.HEIGHT * 2) {
+                cy = (int) (terrain.height * Block.HEIGHT * 2 - height * 2);
+            }
+            cameraX = cx;
+            cameraY = cy;
         }
         ArrayList<Entity> move = new ArrayList<Entity>();
         if (FMouse.rightReleased) {
@@ -145,7 +163,7 @@ public class World extends FScene implements Serializable {
                     && ty < terrain.height
                     && terrain.getTile(tx, ty).passable) {
                 point.add(new Point(tx * 64 + 32, ty * 64 + 32));
-            }else{
+            } else {
             }
             switch (dir) {
                 case 0:
@@ -194,7 +212,7 @@ public class World extends FScene implements Serializable {
                 int d = (int) Math.sqrt(
                         Math.pow(e.x - px, 2)
                         + Math.pow(e.y - py, 2));
-                if(d >= dist){
+                if (d >= dist) {
                     dist = d;
                     en = e;
                 }
@@ -204,14 +222,14 @@ public class World extends FScene implements Serializable {
                 int d = (int) Math.sqrt(
                         Math.pow(en.x - p.x, 2)
                         + Math.pow(en.y - p.y, 2));
-                if(d <= dist){
+                if (d <= dist) {
                     dist = d;
                     pn = p;
                 }
             }
-           en.goTo(pn.x, pn.y);
-           move.remove(en);
-           point.remove(pn);
+            en.goTo(pn.x, pn.y);
+            move.remove(en);
+            point.remove(pn);
         }
         super.hover(mx, my);
     }
@@ -231,16 +249,18 @@ public class World extends FScene implements Serializable {
     @Override
     public void init() {
         super.init();
-        for (int i = 0; i < 30; i++) {
-            add(KaiseratMammutidae.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
+        for (int i = 0; i < 10; i++) {
+
+            add(KaiseratStiletto.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
             add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
-            add(KaiseratMammutidae.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+            add(KaiseratStiletto.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
         }
 
     }
 
     @Override
     public void tick() {
+        terrain.tick++;
         Entity[] ent = getEntities();
         for (Entity e : ent) {
             e.tick(ent);

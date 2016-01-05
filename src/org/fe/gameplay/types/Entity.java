@@ -42,6 +42,9 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
     public transient Point[] way;
     public transient int currentPoint = 0;
     public World world;
+    
+    public Attack attack1, attack2;
+    
 
     public static FImage frame[] = {
         new FImage("gui/unit_frame/0"),
@@ -60,6 +63,12 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
 
     public void tick(Entity[] e) {
         tickMove(e);
+        if(attack1 != null){
+            attack1.tick(this, e);
+        }
+        if(attack2 != null){
+            attack2.tick(this, e);
+        }
     }
 
     public void tickMove(Entity[] e) {
@@ -150,13 +159,10 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
                 this.parent = parent;
                 this.x = x;
                 this.y = y;
-
-                if (parent != null) {
-                }
-
+                /*
                 if (!check(0, 0)) {
                     growThere(dir(x, targetX), dir(y, targetY), list);
-                }
+                }//*/
             }
 
             public int dir(int x1, int x2) {
@@ -208,7 +214,7 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
             }
         }
         List<Step> s1 = new ArrayList<Step>(), s2 = new ArrayList<Step>(), s3 = null;
-        s1.add(new Step(s2, null, currentX, currentY));
+        s2.add(new Step(s2, null, currentX, currentY));
         Step end = null;
         while (s2.size() > 0) {
             s3 = s1;

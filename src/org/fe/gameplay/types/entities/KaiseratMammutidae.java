@@ -16,6 +16,7 @@
  */
 package org.fe.gameplay.types.entities;
 
+import org.fe.gameplay.types.Attack;
 import org.fe.gameplay.types.Entity;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FImage;
@@ -25,9 +26,13 @@ import org.newdawn.slick.Color;
  *
  * @author yew_mentzaki
  */
-public class KaiseratMammutidae extends Entity{
-    
-    static FImage[] stands={
+public class KaiseratMammutidae extends Entity {
+
+    public KaiseratMammutidae() {
+        attack1 = new Attack(700, 70, 250, 10);
+    }
+
+    static FImage[] stands = {
         new FImage("entities/kaiserat/mammutidae/stand/0"),
         new FImage("entities/kaiserat/mammutidae/stand/1"),
         new FImage("entities/kaiserat/mammutidae/stand/2"),
@@ -38,7 +43,18 @@ public class KaiseratMammutidae extends Entity{
         new FImage("entities/kaiserat/mammutidae/stand/7")
     };
 
-    static FImage[] stands_team={
+    static FImage[] attack = {
+        new FImage("entities/kaiserat/mammutidae/attack/0"),
+        new FImage("entities/kaiserat/mammutidae/attack/1"),
+        new FImage("entities/kaiserat/mammutidae/attack/2"),
+        new FImage("entities/kaiserat/mammutidae/attack/3"),
+        new FImage("entities/kaiserat/mammutidae/attack/4"),
+        new FImage("entities/kaiserat/mammutidae/attack/5"),
+        new FImage("entities/kaiserat/mammutidae/attack/6"),
+        new FImage("entities/kaiserat/mammutidae/attack/7")
+    };
+
+    static FImage[] stands_team = {
         new FImage("entities/kaiserat/mammutidae/stand/0_team"),
         new FImage("entities/kaiserat/mammutidae/stand/1_team"),
         new FImage("entities/kaiserat/mammutidae/stand/2_team"),
@@ -51,21 +67,23 @@ public class KaiseratMammutidae extends Entity{
 
     @Override
     public void renderShadow() {
-        
+
     }
 
     @Override
     public void tick(Entity[] e) {
-        super.tick(e); //To change body of generated methods, choose Tools | Templates.
+        super.tick(e);
     }
 
     @Override
     public void renderBody() {
-        stands[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
+        if (attack1.animation) {
+            attack[angleToDir8(a)].draw(x - attack[0].getWidth() / 2, y / 2 - 44);
+        } else {
+            stands[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
+        }
         stands_team[angleToDir8(a)].setColor(FColor.magenta);
         stands_team[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
     }
-    
-    
-    
+
 }

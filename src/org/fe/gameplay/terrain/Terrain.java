@@ -16,6 +16,12 @@
  */
 package org.fe.gameplay.terrain;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.fe.Main;
 import org.fe.gameplay.types.Chassis;
 
@@ -29,6 +35,7 @@ public class Terrain {
     public int width, height;
 
     public Biome biome;
+    public int tick;
 
     public Terrain() {
 
@@ -44,9 +51,38 @@ public class Terrain {
         }
     }
 
+    public Terrain(String name) {
+
+        biome = new Biome("south");
+        
+        try {
+            InputStream in = null;
+            try {
+                in = new FileInputStream("data/maps/" + name);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Terrain.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            byte bt[] = new byte[1];
+            in.read(bt);
+            width = bt[0] + 129;
+            in.read(bt);
+            height = bt[0] + 129;
+            tiles = new byte[width][height];
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    in.read(bt);
+                    tiles[x][height - 1 - y] = bt[0];
+                }
+            }
+            in.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Terrain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public int getTileID(int x, int y) {
         if (x >= 0 && y >= 0 && x < width && y < height) {
-            return tiles[x][y] + 128;
+            return Math.min(tiles[x][y] + 128, biome.tiles.length - 1);
         } else {
             return 0;
         }
@@ -65,14 +101,14 @@ public class Terrain {
     public void render(int cx, int cy, int w, int h) {
         for (int x = cx / Block.WIDTH - 1; x < (cx + w) / Block.WIDTH + 1; x++) {
             for (int y = cy / Block.HEIGHT - 1; y < (cy + h) / Block.HEIGHT + 1; y++) {
-                getTile(x, y).render(x, y, 0);
+                getTile(x, y).render(x, y, tick);
             }
         }
     }
 
-    public boolean[][] getMap(Chassis type){
+    public boolean[][] getMap(Chassis type) {
         boolean[][] b = new boolean[width][height];
-        if(type == Chassis.TRACKS){
+        if (type == Chassis.TRACKS) {
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     b[x][y] = getTile(x, y).passable;
@@ -81,5 +117,5 @@ public class Terrain {
         }
         return b;
     }
-    
+
 }

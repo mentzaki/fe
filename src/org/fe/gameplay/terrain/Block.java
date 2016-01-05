@@ -25,17 +25,22 @@ import org.fe.graphics.FImage;
  */
 public class Block {
 
-    static final int WIDTH = 64, HEIGHT = 32;
-    
+    public static final int WIDTH = 64, HEIGHT = 32;
+
+    static FImage waterTile = new FImage("tiles/south/water/0");
     FImage fi;
+    FImage fis[];
     public boolean passable = true, water;
 
     public Block() {
     }
-    
-    public void render(int x, int y, int tick){
-        if(fi != null){
+
+    public void render(int x, int y, int tick) {
+        waterTile.draw(x * WIDTH, y * HEIGHT);
+        if (fi != null) {
             fi.draw(x * WIDTH, y * HEIGHT);
+        }else{
+            fis[(tick - tick / fis.length / 30 * fis.length * 30) / 30].draw(x * WIDTH, y * HEIGHT);
         }
     }
 
@@ -47,7 +52,15 @@ public class Block {
                     ).replace(".png", "")
             );
         } else {
-
+            File[] fs = f.listFiles();
+            fis = new FImage[fs.length];
+            for (int i = 0; i < fs.length; i++) {
+                fis[i] = new FImage(
+                        f.getAbsolutePath().substring(
+                                new File("res/textures").getAbsolutePath().length() + 1
+                        ) + "/" + i
+                );
+            }
         }
 
     }

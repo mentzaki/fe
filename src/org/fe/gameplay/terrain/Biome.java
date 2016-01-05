@@ -38,7 +38,6 @@ public class Biome {
             Logger.getLogger(Biome.class.getName()).log(Level.SEVERE, null, ex);
         }
         tiles = new Block[fdata.get("tile_length").toInteger()];
-        System.out.println(tiles.length);
         for (int i = 0; i < tiles.length; i++) {
             File f = new File("res/textures/tiles/" + name + "/" + i + ".png");
                 tiles[i] = new Block();
@@ -51,10 +50,13 @@ public class Biome {
                 }
             }
             FData tile = fdata.get("tiles").get(String.valueOf(i));
-            if(!tile.isEmpty()){
+            
+                System.out.println("tile " + i + ":");
                 tiles[i].passable = tile.get("passable").toBoolean(true);
+                System.out.println("   passable - " + tiles[i].passable);
                 tiles[i].water = tile.get("water").toBoolean(false);
-            }
+                System.out.println("      water - " + tiles[i].water);
+            
         }
     }
 

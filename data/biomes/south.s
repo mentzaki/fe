@@ -1,4 +1,4 @@
-tile_length = 61
+tile_length = 62
 
 tiles
     1
@@ -34,44 +34,52 @@ tiles
     31
         passable = false
     32
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
+        class = org.fe.gameplay.terrain.WaterBlock
+        water = true
     33
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    34
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    35
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    36
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    37
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    38
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    39
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    40
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    41
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    42
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    43
-	class = org.fe.gameplay.terrain.WaterBlock
-	water = true
-    44
-	class = org.fe.gameplay.terrain.WaterBlock
+        class = org.fe.gameplay.terrain.WaterBlock
         passable = false
-	water = true
+        water = true
+    34
+        class = org.fe.gameplay.terrain.WaterBlock
+        water = true
+    35
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    36
+        class = org.fe.gameplay.terrain.WaterBlock
+        water = true
+    37
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    38
+        class = org.fe.gameplay.terrain.WaterBlock
+        water = true
+    39
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    40
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    41
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    42
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    43
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
+    44
+        class = org.fe.gameplay.terrain.WaterBlock
+        passable = false
+        water = true
 
 
