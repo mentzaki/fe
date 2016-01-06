@@ -105,7 +105,7 @@ public class Scenes {
 
             @Override
             public void click(double mx, double my) {
-                WINDOW.setScene(new World(1));
+                WINDOW.setScene(new World(2));
             }
 
         };

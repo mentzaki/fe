@@ -29,7 +29,7 @@ import org.newdawn.slick.Color;
 public class KaiseratMammutidae extends Entity {
 
     public KaiseratMammutidae() {
-        attack1 = new Attack(700, 70, 250, 10);
+        attack1 = new Attack(6, true, Attack.HEADLESS, 700, 70, 250, 10);
     }
 
     static FImage[] stands = {
@@ -77,13 +77,16 @@ public class KaiseratMammutidae extends Entity {
 
     @Override
     public void renderBody() {
-        if (attack1.animation) {
+
+        if (attack1.animation && hp > 0) {
             attack[angleToDir8(a)].draw(x - attack[0].getWidth() / 2, y / 2 - 44);
         } else {
             stands[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
         }
-        stands_team[angleToDir8(a)].setColor(FColor.magenta);
-        stands_team[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
+        if (hp > 0) {
+            stands_team[angleToDir8(a)].setColor(world.playerHandler[owner].color);
+            stands_team[angleToDir8(a)].draw(x - stands[0].getWidth() / 2, y / 2 - 44);
+        }
     }
 
 }

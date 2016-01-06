@@ -19,11 +19,11 @@ package org.fe.gameplay.types;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.fe.Main;
 import org.fe.gameplay.world.World;
 import org.fe.graphics.FImage;
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  *
@@ -31,20 +31,26 @@ import org.fe.graphics.FImage;
  */
 public abstract class Entity implements Serializable, Comparable<Entity> {
 
+    public double hp, maxHp = hp = 100, shield, maxShield = shield = 50;
+    public double shieldRestoreSpeed = 0.02;
     public int id, type, owner;
     public double x, y, z, a;
-    public int width = 72, height = 25;
+    public int width = 64, height = 25;
     public int _own_tx = -1, _own_ty;
-    public int _own_target;
-    public float speed = 1.5f;
+    public int _own_target = -1;
+    public float speed = 1.5f, armor = 0.5f;
     public transient int mileage;
     public transient boolean selected, selectable = true, stoped;
     public transient Point[] way;
     public transient int currentPoint = 0;
     public World world;
-    
+
     public Attack attack1, attack2;
-    
+
+    public transient int forcefield_use, health_use;
+    public static FImage forcefields_active_sprite = new FImage("effects/forcefields_active");
+    public static FImage forcefields_sprite = new FImage("effects/forcefields");
+    public static FImage healthBar = new FImage("gui/healthbar");
 
     public static FImage frame[] = {
         new FImage("gui/unit_frame/0"),
@@ -61,13 +67,62 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
     public Entity() {
     }
 
-    public void tick(Entity[] e) {
-        tickMove(e);
-        if(attack1 != null){
-            attack1.tick(this, e);
+    public void hit(int damage) {
+        health_use = 100;
+        if (shield > 0) {
+            shield -= damage;
+            forcefield_use = 200;
+            if (shield <= 0) {
+                damage = (int) -shield;
+                shield = 0;
+            } else {
+                return;
+            }
         }
-        if(attack2 != null){
-            attack2.tick(this, e);
+        if (hp > 0) {
+            hp -= (int) (((double) damage) * armor);
+        }else{
+            return;
+        }
+        if (hp <= 0) {
+            hp = 0;
+            mileage = Main.RANDOM.nextInt(5);
+        }
+    }
+
+    public void tick(Entity[] e) {
+        if (hp > 0) {
+            if (forcefield_use > 0) {
+                forcefield_use--;
+            }
+
+            if (forcefield_use < 30) {
+                if (shield < maxShield) {
+                    shield += shieldRestoreSpeed;
+                    health_use = 2;
+                }
+            }
+            if (health_use > 0) {
+                health_use--;
+            }
+            tickMove(e);
+            tickEntityList(e);
+            if (attack1 != null) {
+                attack1.tick(this, e);
+            }
+            if (attack2 != null) {
+                attack2.tick(this, e);
+            }
+        } else {
+            stoped = true;
+            forcefield_use = 0;
+            health_use = 0;
+            selectable = false;
+        }
+    }
+
+    public void tickEntityList(Entity[] e) {
+        for (Entity en : e) {
         }
     }
 
@@ -107,7 +162,11 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
                         i._own_tx = (ex + dx) * 64 + 32;
                         i._own_ty = (ey + dy) * 64 + 32;
                     } else if (!i.stoped) {
-                        stoped = true;
+                        if (dist(i.x, i.y, i._own_tx, i._own_ty) < dist(x, y, _own_tx, _own_ty)) {
+                            stoped = true;
+                        } else {
+                            i.stoped = true;
+                        }
                     }
                 }
             }
@@ -250,9 +309,7 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
     public abstract void renderBody();
 
     protected int angleToDir8(double a) {
-        if (a > 2 * Math.PI || a < 0) {
-            a -= (double) ((int) (a / 2.0 / Math.PI)) * 2 * Math.PI;
-        }
+        a -= (double) ((int) (a / 2.0 / Math.PI)) * 2 * Math.PI;
         if ((a >= 0 && a <= Math.PI / 8) || (a <= Math.PI * 2 && a >= Math.PI * 15 / 8)) {
             return 0;
         }
@@ -281,6 +338,10 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
         return 6;
     }
 
+    protected int dist(double x1, double y1, double x2, double y2) {
+        return (int) (Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)));
+    }
+
     public void render() {
         if (selected) {
             frame[0].draw(x - 8, y / 2 - width / 4 - 8);
@@ -290,6 +351,15 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
 
         renderBody();
 
+        if (forcefield_use > 0) {
+            int f1 = Math.max(0, forcefield_use - 170);
+            int f2 = Math.min(50, forcefield_use);
+            forcefields_sprite.a = (float) (f2 * ((double) shield / (double) maxShield)) / 50f;
+            forcefields_sprite.draw(x - 64, y / 2 - 64);
+            forcefields_active_sprite.a = (float) (f1) / 30f;
+            forcefields_active_sprite.draw(x - 64, y / 2 - 64);
+        }
+
         if (selected) {
             frame[2].draw(x - 8, y / 2 + width / 4 - 8);
             frame[4].draw(x - 8, y / 2 - width / 4 - 8 - height);
@@ -297,6 +367,55 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
             frame[6].draw(x - 8, y / 2 + width / 4 - 8 - height);
             frame[7].draw(x - 8 + width / 2, y / 2 - 8 - height);
         }
+    }
+
+    public void renderGUI() {
+        if (health_use > 0 || selected) {
+            int hp = (int) (this.shield / this.maxShield * 64);
+
+            glColor3f(1f, 0.5f, 0f);
+            glBegin(GL_POLYGON);
+            {
+                glVertex2d(x - 32, y / 2 + width / 4 - 4);
+                glVertex2d(x - 32 + Math.min(32, hp), y / 2 + width / 4 + Math.min(32, hp) / 2 - 4);
+                glVertex2d(x - 32 + Math.min(32, hp), y / 2 + width / 4 + Math.min(32, hp) / 2);
+                glVertex2d(x - 32, y / 2 + width / 4);
+            }
+            glEnd();
+            glBegin(GL_POLYGON);
+            {
+                glVertex2d(x, y / 2 + width / 4 + 12);
+                glVertex2d(x + Math.max(0, hp - 32), y / 2 + width / 4 - Math.max(0, hp - 32) / 2 + 12);
+                glVertex2d(x + Math.max(0, hp - 32), y / 2 + width / 4 - Math.max(0, hp - 32) / 2 + 16);
+                glVertex2d(x, y / 2 + width / 4 + 16);
+            }
+            glEnd();
+
+            hp = (int) (this.hp / this.maxHp * 64);
+
+            glColor3f(0f, 0.8f, 0f);
+            glBegin(GL_POLYGON);
+            {
+                glVertex2d(x - 32, y / 2 + width / 4);
+                glVertex2d(x - 32 + Math.min(32, hp), y / 2 + width / 4 + Math.min(32, hp) / 2);
+                glVertex2d(x - 32 + Math.min(32, hp), y / 2 + width / 4 + Math.min(32, hp) / 2 + 4);
+                glVertex2d(x - 32, y / 2 + width / 4 + 4);
+            }
+            glEnd();
+            glBegin(GL_POLYGON);
+            {
+                glVertex2d(x, y / 2 + width / 4 + 16);
+                glVertex2d(x + Math.max(0, hp - 32), y / 2 + width / 4 - Math.max(0, hp - 32) / 2 + 16);
+                glVertex2d(x + Math.max(0, hp - 32), y / 2 + width / 4 - Math.max(0, hp - 32) / 2 + 20);
+                glVertex2d(x, y / 2 + width / 4 + 20);
+            }
+            glEnd();
+        }
+        healthBar.draw(0, 0, 0, 0);
+    }
+
+    public void doNothing() {
+
     }
 
     public void remove() {

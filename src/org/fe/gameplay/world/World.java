@@ -28,9 +28,11 @@ import org.fe.gameplay.terrain.Terrain;
 import org.fe.gameplay.types.Entity;
 import org.fe.gameplay.types.entities.KaiseratMammutidae;
 import org.fe.gameplay.types.entities.KaiseratStiletto;
+import org.fe.graphics.FColor;
 import org.fe.graphics.FKeyboard;
 import org.fe.graphics.FMouse;
 import org.fe.gui.FScene;
+import org.fgameplay.types.Effect;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
@@ -56,6 +58,22 @@ public class World extends FScene implements Serializable {
         this.seed = Main.RANDOM.nextInt(Integer.MAX_VALUE);
         this.terrain = new Terrain("skirmish_0.map");
         this.playerHandler = new Player[players];
+        FColor colors[] = new FColor[]{
+            FColor.magenta,
+            FColor.cyan,
+            FColor.red,
+            FColor.green,
+            FColor.blue,
+            FColor.yellow,
+            FColor.orange,
+            FColor.pink,
+            FColor.gray,
+            FColor.black
+
+        };
+        for (int i = 0; i < this.players; i++) {
+            this.playerHandler[i] = new Player(colors[i], "Player " + 1, 0, i);
+        }
     }
 
     public World(int players, int seed) {
@@ -85,6 +103,15 @@ public class World extends FScene implements Serializable {
         }
     }
 
+    public void add(Effect e) {
+        for (int i = 0; i < effects.length; i++) {
+            if (effects[i] == null || effects[i].remove) {
+                effects[i] = e;
+                break;
+            }
+        }
+    }
+
     public void remove(Entity e) {
         indexedEntities.set(e.id, null);
         entities.remove(e);
@@ -93,6 +120,7 @@ public class World extends FScene implements Serializable {
     private int id;
     private ArrayList<Entity> indexedEntities = new ArrayList<Entity>(),
             entities = new ArrayList<Entity>();
+    private Effect[] effects = new Effect[256];
 
     @Override
     public void handleHover(double mx, double my) {
@@ -254,6 +282,8 @@ public class World extends FScene implements Serializable {
             add(KaiseratStiletto.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
             add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
             add(KaiseratStiletto.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+
+            add(KaiseratMammutidae.class, 64 * 20 + 32, 64 * 3 + 16, 0, 0, 1);
         }
 
     }
@@ -265,6 +295,15 @@ public class World extends FScene implements Serializable {
         for (Entity e : ent) {
             e.tick(ent);
         }
+        for (int i = 0; i < effects.length; i++) {
+            Effect e = effects[i];
+            if(e != null){
+                e.tick();
+                if(e.remove){
+                    effects[i] = null;
+                }
+            }
+        }
     }
 
     @Override
@@ -274,9 +313,25 @@ public class World extends FScene implements Serializable {
         terrain.render(cameraX, cameraY / 2, (int) width, (int) height);
         Entity[] ent = getEntities();
         Arrays.sort(ent);
+
         for (Entity e : ent) {
             e.render();
         }
+
+        for (int i = 0; i < effects.length; i++) {
+            Effect e = effects[i];
+            if(e != null && e.onScreen(cameraX, cameraY, (int)width, (int)height)){
+                e.render();
+                if(e.remove){
+                    effects[i] = null;
+                }
+            }
+        }
+        
+        for (Entity e : ent) {
+            e.renderGUI();
+        }
+
         if (FMouse.left) {
             Main.GRAPHICS.setColor(Color.white);
             Main.GRAPHICS.drawRect(selectX,

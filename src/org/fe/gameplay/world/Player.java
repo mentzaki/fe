@@ -23,7 +23,7 @@ import org.fe.graphics.FColor;
  * @author fax
  */
 public class Player {
-    FColor color;
+    public FColor color;
     String name;
     int faction;
     int index;

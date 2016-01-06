@@ -14,34 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fgameplay.types;
+package org.fe.gameplay.types.effects;
 
 /**
  *
  * @author yew_mentzaki
  */
-public class Effect {
-
-    public boolean remove;
-    public int life = 100;
-    public int x, y;
-    public int width = 100;
-
-    public boolean onScreen(int cx, int cy, int w, int h) {
-        return (x - width / 2 <= cx + w
-                && x + width / 2 >= cx
-                && y - width / 2 <= cy + h
-                && y + width / 2 >= cy);
-    }
-
-    public void tick() {
-        life--;
-        if (life <= 0) {
-            remove = true;
-        }
-    }
-
-    public void render() {
-
-    }
+public class Explosion {
+    
 }
