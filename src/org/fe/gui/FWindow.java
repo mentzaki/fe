@@ -51,6 +51,8 @@ import org.fe.graphics.FColor;
 import org.fe.graphics.FFont;
 import org.fe.graphics.FKeyboard;
 import org.fe.graphics.FMouse;
+import org.fe.graphics.FTextureLoader;
+import org.fe.graphics.LoadTask;
 import org.fe.main.FMusic;
 import org.fe.main.FSound;
 
@@ -143,6 +145,14 @@ public class FWindow extends FElement {
             Display.create();
             FMusic.init();
             FFont.font = new FFont("europe_ext", 0, 14);
+            FTextureLoader.load();
+            float allTasks = LoadTask.tasks.size();
+            System.out.println("Loading images");
+            while (LoadTask.tasks.size() > 0) {
+                System.out.println(LoadTask.tasks.get(0).text);
+                LoadTask.tasks.get(0).load();
+                LoadTask.tasks.remove(0);
+            }
             while (true) {
                 if (Display.isCloseRequested()) {
                     System.exit(0);

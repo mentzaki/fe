@@ -14,34 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fe.gameplay.types;
+package org.fe.graphics;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author yew_mentzaki
  */
-public class Effect {
-
-    public boolean remove = false;
-    public int life = 100;
-    public int x, y;
-    public int width = 100;
-
-    public boolean onScreen(int cx, int cy, int w, int h) {
-        return (x - width / 2 <= cx + w
-                && x + width / 2 >= cx
-                && y - width / 2 <= cy + h * 2
-                && y + width / 2 >= cy);
+public abstract class LoadTask {
+    public static ArrayList<LoadTask> tasks = new ArrayList<LoadTask>();
+    public final String text;
+    public LoadTask(String text) {
+        this.text = text;
+        tasks.add(this);
     }
-
-    public void tick() {
-        life--;
-        if (life <= 0) {
-            remove = true;
-        }
-    }
-
-    public void render() {
-
-    }
+    public abstract void load();
 }

@@ -16,6 +16,7 @@
  */
 package org.fe.gameplay.types;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import org.fe.gameplay.types.effects.Laser;
 
 /**
@@ -140,6 +141,9 @@ public class Attack {
     }
 
     protected void attack(Entity e, Entity list[], Entity t) {
+        if(t.owner == e.world.player){
+            e.world.fogOfWar.open(5, (int)e.x, (int)e.y);
+        }
         t.hit(damage);
     }
 

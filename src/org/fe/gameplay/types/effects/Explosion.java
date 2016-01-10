@@ -16,10 +16,36 @@
  */
 package org.fe.gameplay.types.effects;
 
+import org.fe.gameplay.types.Effect;
+import org.fe.graphics.FImage;
+
 /**
  *
  * @author yew_mentzaki
  */
-public class Explosion {
+public class Explosion extends Effect{
+
+    public Explosion(double x, double y) {
+        this.x = (int) x;
+        this.y = (int) y;
+        this.life = 40;
+    }
     
+    private static FImage[] explosion = {
+        new FImage("effects/small_explosion/0"),
+        new FImage("effects/small_explosion/1"),
+        new FImage("effects/small_explosion/2"),
+        new FImage("effects/small_explosion/3"),
+        new FImage("effects/small_explosion/4"),
+        new FImage("effects/small_explosion/5"),
+        new FImage("effects/small_explosion/6"),
+        new FImage("effects/small_explosion/7"),
+        new FImage("effects/small_explosion/8"),
+    };
+
+    @Override
+    public void render() {
+        explosion[Math.min(8, 9 - life / 5)].draw(x - 32, y / 2 - 20);
+    }
+   
 }

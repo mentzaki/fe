@@ -1,4 +1,4 @@
-tile_length = 62
+tile_length = 65
 
 tiles
     1
@@ -81,5 +81,5 @@ tiles
         class = org.fe.gameplay.terrain.WaterBlock
         passable = false
         water = true
-
-
+    61
+        spawn = org.fe.gameplay.types.entities.neutral.Tree

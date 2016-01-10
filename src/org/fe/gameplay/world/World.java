@@ -24,15 +24,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fe.Main;
 import org.fe.gameplay.terrain.Block;
+import org.fe.gameplay.terrain.FogOfWar;
 import org.fe.gameplay.terrain.Terrain;
 import org.fe.gameplay.types.Entity;
-import org.fe.gameplay.types.entities.KaiseratMammutidae;
-import org.fe.gameplay.types.entities.KaiseratStiletto;
+import org.fe.gameplay.types.entities.kaiserat.Mammutidae;
+import org.fe.gameplay.types.entities.kaiserat.Stiletto;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FKeyboard;
 import org.fe.graphics.FMouse;
 import org.fe.gui.FScene;
-import org.fgameplay.types.Effect;
+import org.fe.gameplay.types.Effect;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
@@ -42,10 +43,10 @@ import org.newdawn.slick.Color;
  */
 public class World extends FScene implements Serializable {
 
-    int player = 0;
+    public int player = 0;
     int players;
 
-    public Terrain terrain;
+    public Terrain terrain; public FogOfWar fogOfWar;
 
     public Player playerHandler[];
     public int seed;
@@ -57,6 +58,7 @@ public class World extends FScene implements Serializable {
         this.players = players;
         this.seed = Main.RANDOM.nextInt(Integer.MAX_VALUE);
         this.terrain = new Terrain("skirmish_0.map");
+        this.fogOfWar = new FogOfWar(terrain.width, terrain.height);
         this.playerHandler = new Player[players];
         FColor colors[] = new FColor[]{
             FColor.magenta,
@@ -80,6 +82,7 @@ public class World extends FScene implements Serializable {
         this.players = players;
         this.seed = seed;
         this.terrain = new Terrain();
+        this.fogOfWar = new FogOfWar(terrain.width, terrain.height);
         this.playerHandler = new Player[players];
     }
 
@@ -279,11 +282,11 @@ public class World extends FScene implements Serializable {
         super.init();
         for (int i = 0; i < 10; i++) {
 
-            add(KaiseratStiletto.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
-            add(KaiseratMammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
-            add(KaiseratStiletto.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
+            add(Stiletto.class, 64 * 2 + 32, 64 * 4 + 16, 0, 0, 0);
+            add(Mammutidae.class, 64 * 3 + 32, 64 * 3 + 16, 0, 0, 0);
+            add(Stiletto.class, 64 * 4 + 32, 64 * 4 + 16, 0, 0, 0);
 
-            add(KaiseratMammutidae.class, 64 * 20 + 32, 64 * 3 + 16, 0, 0, 1);
+            add(Mammutidae.class, 64 * 20 + 32, 64 * 3 + 16, 0, 0, 1);
         }
 
     }
@@ -291,19 +294,21 @@ public class World extends FScene implements Serializable {
     @Override
     public void tick() {
         terrain.tick++;
+        fogOfWar.tick();
         Entity[] ent = getEntities();
         for (Entity e : ent) {
             e.tick(ent);
         }
         for (int i = 0; i < effects.length; i++) {
             Effect e = effects[i];
-            if(e != null){
+            if (e != null) {
                 e.tick();
-                if(e.remove){
+                if (e.remove) {
                     effects[i] = null;
                 }
             }
         }
+        
     }
 
     @Override
@@ -315,24 +320,36 @@ public class World extends FScene implements Serializable {
         Arrays.sort(ent);
 
         for (Entity e : ent) {
+            if(fogOfWar.isVisible((int)e.x / 32, (int)e.y / 32))
             e.render();
         }
 
         for (int i = 0; i < effects.length; i++) {
             Effect e = effects[i];
-            if(e != null && e.onScreen(cameraX, cameraY, (int)width, (int)height)){
+            if (e != null && e.onScreen(cameraX, cameraY, (int) width, (int) height)) {
                 e.render();
-                if(e.remove){
+                if (e.remove) {
                     effects[i] = null;
                 }
             }
         }
         
+        fogOfWar.render(cameraX, cameraY / 2, (int) width, (int) height);
+
         for (Entity e : ent) {
-            e.renderGUI();
+            if (e.onScreen(cameraX, cameraY, (int) width, (int) height)) {
+            if(fogOfWar.isVisible((int)e.x / 32, (int)e.y / 32))
+                e.renderGUI();
+            }
         }
 
         if (FMouse.left) {
+            Main.GRAPHICS.setColor(new Color(0, 0, 0, 0.15f));
+            Main.GRAPHICS.fillRect(selectX,
+                    (selectY) / 2,
+                    selectX2 - selectX,
+                    (selectY2 - selectY) / 2
+            );
             Main.GRAPHICS.setColor(Color.white);
             Main.GRAPHICS.drawRect(selectX,
                     (selectY) / 2,

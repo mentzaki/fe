@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.fe.Main;
+import org.fe.gameplay.types.effects.Explosion;
 import org.fe.gameplay.world.World;
 import org.fe.graphics.FImage;
 import static org.lwjgl.opengl.GL11.*;
@@ -52,6 +53,13 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
     public static FImage forcefields_sprite = new FImage("effects/forcefields");
     public static FImage healthBar = new FImage("gui/healthbar");
 
+    public boolean onScreen(int cx, int cy, int w, int h) {
+        return (x - width / 2 <= cx + w
+                && x + width / 2 >= cx
+                && y - width / 2 <= cy + h * 2
+                && y + width / 2 >= cy);
+    }
+
     public static FImage frame[] = {
         new FImage("gui/unit_frame/0"),
         new FImage("gui/unit_frame/1"),
@@ -62,7 +70,7 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
         new FImage("gui/unit_frame/6"),
         new FImage("gui/unit_frame/7"),
         new FImage("gui/unit_frame/8"),
-        new FImage("gui/unit_frame/9"),};
+        new FImage("gui/unit_frame/9")};
 
     public Entity() {
     }
@@ -81,7 +89,7 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
         }
         if (hp > 0) {
             hp -= (int) (((double) damage) * armor);
-        }else{
+        } else {
             return;
         }
         if (hp <= 0) {
@@ -92,6 +100,9 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
 
     public void tick(Entity[] e) {
         if (hp > 0) {
+            if (owner == world.player) {
+                world.fogOfWar.open(25, (int) x, (int) y);
+            }
             if (forcefield_use > 0) {
                 forcefield_use--;
             }
@@ -118,6 +129,11 @@ public abstract class Entity implements Serializable, Comparable<Entity> {
             forcefield_use = 0;
             health_use = 0;
             selectable = false;
+            selected = false;
+            if (Main.RANDOM.nextInt(1000) == 0) {
+                world.add(new Explosion(x, y));
+                world.remove(this);
+            }
         }
     }
 

@@ -52,7 +52,6 @@ public class Scenes {
     public static void init() {
         WINDOW = new FWindow("Forces", 800, 600);
         WINDOW.create();
-
         WINDOW.setScene(MAIN_MENU);
     }
 

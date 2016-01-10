@@ -18,7 +18,7 @@ package org.fe.gameplay.types.effects;
 
 import org.fe.Main;
 import org.fe.gameplay.types.Entity;
-import org.fgameplay.types.Effect;
+import org.fe.gameplay.types.Effect;
 import org.newdawn.slick.Color;
 
 /**

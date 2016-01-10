@@ -18,7 +18,7 @@ package org.fe.gameplay.types;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.fe.gameplay.types.entities.KaiseratMammutidae;
+import org.fe.gameplay.types.entities.kaiserat.Mammutidae;
 /**
  *
  * @author fax
@@ -45,7 +45,7 @@ public class Types {
 
     public static void initEntityTypes() {
         entityTypes.add(Entity.class);
-        entityTypes.add(KaiseratMammutidae.class);
+        entityTypes.add(Mammutidae.class);
 
     }
 }

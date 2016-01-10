@@ -1,0 +1,478 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x0000000000000000, pid=18417, tid=140328772781824
+#
+# JRE version: OpenJDK Runtime Environment (8.0_45-b14) (build 1.8.0_45-internal-b14)
+# Java VM: OpenJDK 64-Bit Server VM (25.45-b02 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  0x0000000000000000
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000000
+
+Registers:
+RAX=0x00007fa0e5b4e7c0, RBX=0x0000000000000400, RCX=0x00007fa0d003cb00, RDX=0x00007fa0d003cb00
+RSP=0x00007fa0d6a73d58, RBP=0x00007fa0d0027980, RSI=0x0000000000000000, RDI=0x00007fa0d0027980
+R8 =0x00000000014dfc00, R9 =0x0000000000000001, R10=0x00007fa0d00279a4, R11=0x0000000000000000
+R12=0x00007fa0d002bb10, R13=0x0000000000012000, R14=0x0000000000001000, R15=0x00007fa0d6a73f08
+RIP=0x0000000000000000, EFLAGS=0x0000000000010246, CSGSFS=0x0000000000000033, ERR=0x0000000000000014
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fa0d6a73d58)
+0x00007fa0d6a73d58:   00007fa0e59174d1 00007fa0d0022eb8
+0x00007fa0d6a73d68:   00000000e56cb1c8 01007fa0bb800000
+0x00007fa0d6a73d78:   00007fa0e529ccd8 00007fa000000000
+0x00007fa0d6a73d88:   00007fa0e504d4d2 0000000001c9c380
+0x00007fa0d6a73d98:   00007fa0c4005c10 00007fa0bc000fd0
+0x00007fa0d6a73da8:   00007fa14ca29509 0000000000000000
+0x00007fa0d6a73db8:   00007fa0e5045bab 00007fa0c4000c30
+0x00007fa0d6a73dc8:   0000000000000000 0000000000002000
+0x00007fa0d6a73dd8:   0000000000000000 00007fa0d00268c0
+0x00007fa0d6a73de8:   00007fa0e56cab0a 57007fa0d6a73eb0
+0x00007fa0d6a73df8:   a07eb6ca0ff2f200 0000000000000000
+0x00007fa0d6a73e08:   00007fa0e56cac24 0000000000000000
+0x00007fa0d6a73e18:   00007fa0e504d4d2 0000000000002000
+0x00007fa0d6a73e28:   00007fa0d0023550 0000000000002000
+0x00007fa0d6a73e38:   00007fa0e5055e22 0000000000002000
+0x00007fa0d6a73e48:   00007fa0d002bb10 00007fa0d002bb10
+0x00007fa0d6a73e58:   0000000000002000 00007fa0d0023550
+0x00007fa0d6a73e68:   00007fa0cc06f040 00000400d6a73f00
+0x00007fa0d6a73e78:   00007fa0d6a73e90 0000000000cbf36c
+0x00007fa0d6a73e88:   00007fa0e56ced39 00001fa00000037f
+0x00007fa0d6a73e98:   00007fa0d00268c0 0000000000000000
+0x00007fa0d6a73ea8:   0000000000002000 00007fa0d0023140
+0x00007fa0d6a73eb8:   0000000000000000 00007fa0d0027980
+0x00007fa0d6a73ec8:   0000000000000008 00007fa0d6a73f08
+0x00007fa0d6a73ed8:   00007fa0e592d544 0000000000000000
+0x00007fa0d6a73ee8:   00007fa0d6a73f00 0000000000002000
+0x00007fa0d6a73ef8:   0000000000006000 00007fa0cc06f040
+0x00007fa0d6a73f08:   0000000000002000 0000000000000000
+0x00007fa0d6a73f18:   00007fa0d00272d0 0000000000000000
+0x00007fa0d6a73f28:   0000000000000000 00007fa0e5c4e8cf
+0x00007fa0d6a73f38:   00007fa0d6a749c0 0000000000000000
+0x00007fa0d6a73f48:   00007fa0e592073a 0000000000000000 
+
+Instructions: (pc=0x0000000000000000)
+0xffffffffffffffe0:   
+
+Register to memory mapping:
+
+RAX=0x00007fa0e5b4e7c0: <offset 0x2577c0> in /home/yew_mentzaki/Projects/FE/native/libopenal64.so at 0x00007fa0e58f7000
+RBX=0x0000000000000400 is an unknown value
+RCX=0x00007fa0d003cb00 is an unknown value
+RDX=0x00007fa0d003cb00 is an unknown value
+RSP=0x00007fa0d6a73d58 is an unknown value
+RBP=0x00007fa0d0027980 is an unknown value
+RSI=0x0000000000000000 is an unknown value
+RDI=0x00007fa0d0027980 is an unknown value
+R8 =0x00000000014dfc00 is an unknown value
+R9 =0x0000000000000001 is an unknown value
+R10=0x00007fa0d00279a4 is an unknown value
+R11=0x0000000000000000 is an unknown value
+R12=0x00007fa0d002bb10 is an unknown value
+R13=0x0000000000012000 is an unknown value
+R14=0x0000000000001000 is an unknown value
+R15=0x00007fa0d6a73f08 is an unknown value
+
+
+Stack: [0x00007fa0d6974000,0x00007fa0d6a75000],  sp=0x00007fa0d6a73d58,  free space=1023k
+
+---------------  P R O C E S S  ---------------
+
+VM state:at safepoint (shutting down)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007fa144006bc0] Threads_lock - owner thread: 0x00007fa144078000
+
+Heap:
+ PSYoungGen      total 203264K, used 178595K [0x00000000ec000000, 0x00000000fd880000, 0x0000000100000000)
+  eden space 179712K, 89% used [0x00000000ec000000,0x00000000f5d2ba68,0x00000000f6f80000)
+  from space 23552K, 74% used [0x00000000f6f80000,0x00000000f80bd358,0x00000000f8680000)
+  to   space 25600K, 0% used [0x00000000fbf80000,0x00000000fbf80000,0x00000000fd880000)
+ ParOldGen       total 92160K, used 38040K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6526200,0x00000000c9a00000)
+ Metaspace       used 11474K, capacity 11679K, committed 12032K, reserved 1060864K
+  class space    used 1155K, capacity 1222K, committed 1280K, reserved 1048576K
+
+Card table byte_map: [0x00007fa14950f000,0x00007fa1496f0000] byte_map_base: 0x00007fa148eef000
+
+Marking Bits: (ParMarkBitMap*) 0x00007fa14c2d9e80
+ Begin Bits: [0x00007fa122200000, 0x00007fa123100000)
+ End Bits:   [0x00007fa123100000, 0x00007fa124000000)
+
+Polling page: 0x00007fa14d12b000
+
+CodeCache: size=245760Kb used=7247Kb max_used=7526Kb free=238512Kb
+ bounds [0x00007fa135000000, 0x00007fa135770000, 0x00007fa144000000]
+ total_blobs=2596 nmethods=2002 adapters=507
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 276,547 Thread 0x00007fa1440b1800 nmethod 2125 0x00007fa13537b150 code [0x00007fa13537b320, 0x00007fa13537b8d8]
+Event: 277,916 Thread 0x00007fa1440ad000 2126       4       java.nio.HeapByteBuffer::put (16 bytes)
+Event: 277,918 Thread 0x00007fa1440ad000 nmethod 2126 0x00007fa135155d90 code [0x00007fa135155ee0, 0x00007fa135155fd8]
+Event: 279,400 Thread 0x00007fa1440af800 2127   !   4       sun.awt.X11.XToolkit::callTimeoutTasks (220 bytes)
+Event: 279,404 Thread 0x00007fa1440af800 nmethod 2127 0x00007fa1351226d0 code [0x00007fa135122840, 0x00007fa1351229b8]
+Event: 279,492 Thread 0x00007fa1440ad000 2128   !   4       sun.awt.X11.XToolkit::getNextTaskTime (55 bytes)
+Event: 279,505 Thread 0x00007fa1440ad000 nmethod 2128 0x00007fa135130d90 code [0x00007fa135130f20, 0x00007fa135131230]
+Event: 280,358 Thread 0x00007fa1440b1800 2129       3       org.fe.gameplay.world.World::handleHover (1061 bytes)
+Event: 280,368 Thread 0x00007fa1440b1800 nmethod 2129 0x00007fa1352d2d10 code [0x00007fa1352d3320, 0x00007fa1352d7c38]
+Event: 285,947 Thread 0x00007fa1440af800 2130       4       java.util.concurrent.locks.AbstractQueuedSynchronizer$Node::predecessor (19 bytes)
+
+GC Heap History (10 events):
+Event: 8,160 GC heap before
+{Heap before GC invocations=7 (full 1):
+ PSYoungGen      total 64000K, used 61440K [0x00000000ec000000, 0x00000000f5b00000, 0x0000000100000000)
+  eden space 61440K, 100% used [0x00000000ec000000,0x00000000efc00000,0x00000000efc00000)
+  from space 2560K, 0% used [0x00000000efc00000,0x00000000efc00000,0x00000000efe80000)
+  to   space 17920K, 0% used [0x00000000f4980000,0x00000000f4980000,0x00000000f5b00000)
+ ParOldGen       total 58368K, used 22870K [0x00000000c4000000, 0x00000000c7900000, 0x00000000ec000000)
+  object space 58368K, 39% used [0x00000000c4000000,0x00000000c5655910,0x00000000c7900000)
+ Metaspace       used 10953K, capacity 11187K, committed 11520K, reserved 1058816K
+  class space    used 1123K, capacity 1188K, committed 1280K, reserved 1048576K
+Event: 8,253 GC heap after
+Heap after GC invocations=7 (full 1):
+ PSYoungGen      total 128512K, used 3645K [0x00000000ec000000, 0x00000000f5400000, 0x0000000100000000)
+  eden space 117760K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f3300000)
+  from space 10752K, 33% used [0x00000000f4980000,0x00000000f4d0f510,0x00000000f5400000)
+  to   space 16896K, 0% used [0x00000000f3300000,0x00000000f3300000,0x00000000f4380000)
+ ParOldGen       total 58368K, used 55646K [0x00000000c4000000, 0x00000000c7900000, 0x00000000ec000000)
+  object space 58368K, 95% used [0x00000000c4000000,0x00000000c7657920,0x00000000c7900000)
+ Metaspace       used 10953K, capacity 11187K, committed 11520K, reserved 1058816K
+  class space    used 1123K, capacity 1188K, committed 1280K, reserved 1048576K
+}
+Event: 8,253 GC heap before
+{Heap before GC invocations=8 (full 2):
+ PSYoungGen      total 128512K, used 3645K [0x00000000ec000000, 0x00000000f5400000, 0x0000000100000000)
+  eden space 117760K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f3300000)
+  from space 10752K, 33% used [0x00000000f4980000,0x00000000f4d0f510,0x00000000f5400000)
+  to   space 16896K, 0% used [0x00000000f3300000,0x00000000f3300000,0x00000000f4380000)
+ ParOldGen       total 58368K, used 55646K [0x00000000c4000000, 0x00000000c7900000, 0x00000000ec000000)
+  object space 58368K, 95% used [0x00000000c4000000,0x00000000c7657920,0x00000000c7900000)
+ Metaspace       used 10953K, capacity 11187K, committed 11520K, reserved 1058816K
+  class space    used 1123K, capacity 1188K, committed 1280K, reserved 1048576K
+Event: 8,318 GC heap after
+Heap after GC invocations=8 (full 2):
+ PSYoungGen      total 128512K, used 0K [0x00000000ec000000, 0x00000000f5400000, 0x0000000100000000)
+  eden space 117760K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f3300000)
+  from space 10752K, 0% used [0x00000000f4980000,0x00000000f4980000,0x00000000f5400000)
+  to   space 16896K, 0% used [0x00000000f3300000,0x00000000f3300000,0x00000000f4380000)
+ ParOldGen       total 92160K, used 37428K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 40% used [0x00000000c4000000,0x00000000c648d228,0x00000000c9a00000)
+ Metaspace       used 10953K, capacity 11187K, committed 11520K, reserved 1058816K
+  class space    used 1123K, capacity 1188K, committed 1280K, reserved 1048576K
+}
+Event: 11,765 GC heap before
+{Heap before GC invocations=9 (full 2):
+ PSYoungGen      total 128512K, used 106628K [0x00000000ec000000, 0x00000000f5400000, 0x0000000100000000)
+  eden space 117760K, 90% used [0x00000000ec000000,0x00000000f2821008,0x00000000f3300000)
+  from space 10752K, 0% used [0x00000000f4980000,0x00000000f4980000,0x00000000f5400000)
+  to   space 16896K, 0% used [0x00000000f3300000,0x00000000f3300000,0x00000000f4380000)
+ ParOldGen       total 92160K, used 37428K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 40% used [0x00000000c4000000,0x00000000c648d228,0x00000000c9a00000)
+ Metaspace       used 11325K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+Event: 11,797 GC heap after
+Heap after GC invocations=9 (full 2):
+ PSYoungGen      total 134656K, used 16889K [0x00000000ec000000, 0x00000000f9f00000, 0x0000000100000000)
+  eden space 117760K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f3300000)
+  from space 16896K, 99% used [0x00000000f3300000,0x00000000f437e6c8,0x00000000f4380000)
+  to   space 20992K, 0% used [0x00000000f8a80000,0x00000000f8a80000,0x00000000f9f00000)
+ ParOldGen       total 92160K, used 38024K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6522200,0x00000000c9a00000)
+ Metaspace       used 11325K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+}
+Event: 15,090 GC heap before
+{Heap before GC invocations=10 (full 2):
+ PSYoungGen      total 134656K, used 119765K [0x00000000ec000000, 0x00000000f9f00000, 0x0000000100000000)
+  eden space 117760K, 87% used [0x00000000ec000000,0x00000000f2476fa8,0x00000000f3300000)
+  from space 16896K, 99% used [0x00000000f3300000,0x00000000f437e6c8,0x00000000f4380000)
+  to   space 20992K, 0% used [0x00000000f8a80000,0x00000000f8a80000,0x00000000f9f00000)
+ ParOldGen       total 92160K, used 38024K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6522200,0x00000000c9a00000)
+ Metaspace       used 11348K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+Event: 15,120 GC heap after
+Heap after GC invocations=10 (full 2):
+ PSYoungGen      total 199168K, used 17660K [0x00000000ec000000, 0x00000000f9d80000, 0x0000000100000000)
+  eden space 179712K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f6f80000)
+  from space 19456K, 90% used [0x00000000f8a80000,0x00000000f9bbf1e0,0x00000000f9d80000)
+  to   space 23552K, 0% used [0x00000000f6f80000,0x00000000f6f80000,0x00000000f8680000)
+ ParOldGen       total 92160K, used 38032K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6524200,0x00000000c9a00000)
+ Metaspace       used 11348K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+}
+Event: 19,043 GC heap before
+{Heap before GC invocations=11 (full 2):
+ PSYoungGen      total 199168K, used 191103K [0x00000000ec000000, 0x00000000f9d80000, 0x0000000100000000)
+  eden space 179712K, 96% used [0x00000000ec000000,0x00000000f6960b90,0x00000000f6f80000)
+  from space 19456K, 90% used [0x00000000f8a80000,0x00000000f9bbf1e0,0x00000000f9d80000)
+  to   space 23552K, 0% used [0x00000000f6f80000,0x00000000f6f80000,0x00000000f8680000)
+ ParOldGen       total 92160K, used 38032K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6524200,0x00000000c9a00000)
+ Metaspace       used 11360K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+Event: 19,254 GC heap after
+Heap after GC invocations=11 (full 2):
+ PSYoungGen      total 203264K, used 17652K [0x00000000ec000000, 0x00000000fd880000, 0x0000000100000000)
+  eden space 179712K, 0% used [0x00000000ec000000,0x00000000ec000000,0x00000000f6f80000)
+  from space 23552K, 74% used [0x00000000f6f80000,0x00000000f80bd358,0x00000000f8680000)
+  to   space 25600K, 0% used [0x00000000fbf80000,0x00000000fbf80000,0x00000000fd880000)
+ ParOldGen       total 92160K, used 38040K [0x00000000c4000000, 0x00000000c9a00000, 0x00000000ec000000)
+  object space 92160K, 41% used [0x00000000c4000000,0x00000000c6526200,0x00000000c9a00000)
+ Metaspace       used 11360K, capacity 11551K, committed 11776K, reserved 1060864K
+  class space    used 1147K, capacity 1222K, committed 1280K, reserved 1048576K
+}
+
+Deoptimization events (10 events):
+Event: 138,752 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa135760c30 method=java.util.ComparableTimSort.mergeLo(IIII)V @ 371
+Event: 147,173 Thread 0x00007fa144272000 Uncommon trap: reason=predicate action=maybe_recompile pc=0x00007fa135302564 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 8
+Event: 150,377 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352185c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 20
+Event: 150,443 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352185c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 20
+Event: 150,443 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352185c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 20
+Event: 150,498 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352185c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 20
+Event: 153,582 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352bc1c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 27
+Event: 153,636 Thread 0x00007fa144272000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fa1352bc1c4 method=java.util.ComparableTimSort.reverseRange([Ljava/lang/Object;II)V @ 27
+Event: 275,048 Thread 0x00007fa144272000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fa135333acc method=org.fe.gameplay.world.World.handleHover(DD)V @ 229
+Event: 285,823 Thread 0x00007fa0f4c8a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fa1356a4744 method=java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireQueued(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;I)Z @ 17
+
+Internal exceptions (10 events):
+Event: 2,907 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbbc0e8) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,907 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbbcc60) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,907 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbbdee8) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,907 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbbea90) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,907 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbbf608) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,908 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbc0850) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,908 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbc13f8) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 2,908 Thread 0x00007fa0f4ba5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ecbc1f70) thrown at [/build/buildd/openjdk-8-8u45-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1382]
+Event: 11,566 Thread 0x00007fa144272000 Implicit null exception at 0x00007fa135584113 to 0x00007fa13558418d
+Event: 11,624 Thread 0x00007fa144272000 Implicit null exception at 0x00007fa13559fd90 to 0x00007fa13559fdc5
+
+Events (10 events):
+Event: 285,822 loading class sun/awt/X11/XMSelectionListener done
+Event: 285,822 loading class sun/awt/X11/XSystemTrayPeer done
+Event: 285,823 Thread 0x00007fa0f4c8a000 Uncommon trap: trap_request=0xffffff65 fr.pc=0x00007fa1356a4744
+Event: 285,823 Thread 0x00007fa0f4c8a000 DEOPT PACKING pc=0x00007fa1356a4744 sp=0x00007fa0d5c630a0
+Event: 285,823 Thread 0x00007fa0f4c8a000 DEOPT UNPACKING pc=0x00007fa135004f69 sp=0x00007fa0d5c63030 mode 2
+Event: 285,942 Executing VM operation: RevokeBias
+Event: 285,943 Executing VM operation: RevokeBias done
+Event: 285,944 Thread 0x00007fa0f4c84000 Thread exited: 0x00007fa0f4c84000
+Event: 285,948 Thread 0x00007fa0f4c8a000 Thread exited: 0x00007fa0f4c8a000
+Event: 285,948 Executing VM operation: Exit
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:06 6558732                            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+00600000-00601000 r--p 00000000 08:06 6558732                            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+00601000-00602000 rw-p 00001000 08:06 6558732                            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+025aa000-025cb000 rw-p 00000000 00:00 0                                  [heap]
+c4000000-c9a00000 rw-p 00000000 00:00 0 
+c9a00000-ec000000 ---p 00000000 00:00 0 
+ec000000-fd880000 rw-p 00000000 00:00 0 
+fd880000-100000000 ---p 00000000 00:00 0 
+100000000-100140000 rw-p 00000000 00:00 0 
+100140000-140000000 ---p 00000000 00:00 0 
+7fa0a8000000-7fa0a8021000 rw-p 00000000 00:00 0 
+7fa0a8021000-7fa0ac000000 ---p 00000000 00:00 0 
+7fa0b0000000-7fa0b0021000 rw-p 00000000 00:00 0 
+7fa0b0021000-7fa0b4000000 ---p 00000000 00:00 0 
+7fa0b79e0000-7fa0b9cf0000 rw-p 00000000 00:00 0 
+7fa0b9f12000-7fa0bc000000 rw-p 00000000 00:00 0 
+7fa0bc000000-7fa0bc021000 rw-p 00000000 00:00 0 
+7fa0bc021000-7fa0c0000000 ---p 00000000 00:00 0 
+7fa0c2091000-7fa0c4000000 rw-p 00000000 00:00 0 
+7fa0c4000000-7fa0c4021000 rw-p 00000000 00:00 0 
+7fa0c4021000-7fa0c8000000 ---p 00000000 00:00 0 
+7fa0c80f8000-7fa0ca266000 rw-p 00000000 00:00 0 
+7fa0ca266000-7fa0ca3e6000 ---p 00000000 00:00 0 
+7fa0ca3e6000-7fa0cbfff000 rw-p 00000000 00:00 0 
+7fa0cbfff000-7fa0d0000000 rw-s 00000000 00:12 245995                     /dev/shm/pulse-shm-4172174092
+7fa0d0000000-7fa0d0675000 rw-p 00000000 00:00 0 
+7fa0d0675000-7fa0d4000000 ---p 00000000 00:00 0 
+7fa0d5b64000-7fa0d5b67000 ---p 00000000 00:00 0 
+7fa0d5b67000-7fa0d5c65000 rw-p 00000000 00:00 0 
+7fa0d5c65000-7fa0d5c68000 ---p 00000000 00:00 0 
+7fa0d5c68000-7fa0d5d66000 rw-p 00000000 00:00 0 
+7fa0d5d66000-7fa0d5f66000 rw-s 1130e4000 00:06 922                       /dev/dri/card0
+7fa0d5fde000-7fa0d5fe1000 ---p 00000000 00:00 0 
+7fa0d5fe1000-7fa0d60df000 rw-p 00000000 00:00 0 
+7fa0d60df000-7fa0d60ef000 rw-s 115df0000 00:06 922                       /dev/dri/card0
+7fa0d60ef000-7fa0d60ff000 rw-s 1101f8000 00:06 922                       /dev/dri/card0
+7fa0d60ff000-7fa0d610f000 rw-s 1101e8000 00:06 922                       /dev/dri/card0
+7fa0d610f000-7fa0d611f000 rw-s 1101d8000 00:06 922                       /dev/dri/card0
+7fa0d611f000-7fa0d612f000 rw-s 1101c8000 00:06 922                       /dev/dri/card0
+7fa0d612f000-7fa0d6133000 rw-s 112d30000 00:06 922                       /dev/dri/card0
+7fa0d6133000-7fa0d6135000 rw-s 112d2e000 00:06 922                       /dev/dri/card0
+7fa0d6135000-7fa0d6137000 rw-s 112d2c000 00:06 922                       /dev/dri/card0
+7fa0d6137000-7fa0d6139000 rw-s 112d2a000 00:06 922                       /dev/dri/card0
+7fa0d6139000-7fa0d613b000 rw-s 112d28000 00:06 922                       /dev/dri/card0
+7fa0d613b000-7fa0d613d000 rw-s 112d26000 00:06 922                       /dev/dri/card0
+7fa0d613d000-7fa0d613f000 rw-s 112d24000 00:06 922                       /dev/dri/card0
+7fa0d613f000-7fa0d6141000 rw-s 112d22000 00:06 922                       /dev/dri/card0
+7fa0d6141000-7fa0d6143000 rw-s 112d20000 00:06 922                       /dev/dri/card0
+7fa0d6143000-7fa0d6145000 rw-s 112d1e000 00:06 922                       /dev/dri/card0
+7fa0d6145000-7fa0d6147000 rw-s 112d1c000 00:06 922                       /dev/dri/card0
+7fa0d6147000-7fa0d6149000 rw-s 112d1a000 00:06 922                       /dev/dri/card0
+7fa0d6149000-7fa0d614b000 rw-s 112d18000 00:06 922                       /dev/dri/card0
+7fa0d614b000-7fa0d614d000 rw-s 112d16000 00:06 922                       /dev/dri/card0
+7fa0d614d000-7fa0d614f000 rw-s 112d14000 00:06 922                       /dev/dri/card0
+7fa0d614f000-7fa0d6151000 rw-s 112d12000 00:06 922                       /dev/dri/card0
+7fa0d6151000-7fa0d6153000 rw-s 112d10000 00:06 922                       /dev/dri/card0
+7fa0d6153000-7fa0d6155000 rw-s 112d0e000 00:06 922                       /dev/dri/card0
+7fa0d6155000-7fa0d6157000 rw-s 112d0c000 00:06 922                       /dev/dri/card0
+7fa0d6157000-7fa0d6159000 rw-s 112d0a000 00:06 922                       /dev/dri/card0
+7fa0d6159000-7fa0d615b000 rw-s 112d08000 00:06 922                       /dev/dri/card0
+7fa0d615b000-7fa0d615d000 rw-s 112d06000 00:06 922                       /dev/dri/card0
+7fa0d615d000-7fa0d615f000 rw-s 112d04000 00:06 922                       /dev/dri/card0
+7fa0d615f000-7fa0d6161000 rw-s 112d02000 00:06 922                       /dev/dri/card0
+7fa0d6161000-7fa0d6163000 rw-s 112d00000 00:06 922                       /dev/dri/card0
+7fa0d6163000-7fa0d6165000 rw-s 112cfe000 00:06 922                       /dev/dri/card0
+7fa0d6165000-7fa0d6167000 rw-s 112cfc000 00:06 922                       /dev/dri/card0
+7fa0d6167000-7fa0d6267000 rw-s 112b6a000 00:06 922                       /dev/dri/card0
+7fa0d6267000-7fa0d626b000 rw-s 1106a3000 00:06 922                       /dev/dri/card0
+7fa0d626b000-7fa0d626f000 rw-s 112a99000 00:06 922                       /dev/dri/card0
+7fa0d626f000-7fa0d6273000 rw-s 12162f000 00:06 922                       /dev/dri/card0
+7fa0d6273000-7fa0d6274000 rw-s 12162e000 00:06 922                       /dev/dri/card0
+7fa0d6274000-7fa0d6275000 rw-s 12162d000 00:06 922                       /dev/dri/card0
+7fa0d6275000-7fa0d6276000 rw-s 110665000 00:06 922                       /dev/dri/card0
+7fa0d6276000-7fa0d6277000 rw-s 110664000 00:06 922                       /dev/dri/card0
+7fa0d6277000-7fa0d6278000 rw-s 110663000 00:06 922                       /dev/dri/card0
+7fa0d6278000-7fa0d6279000 rw-s 110662000 00:06 922                       /dev/dri/card0
+7fa0d6279000-7fa0d627a000 rw-s 110661000 00:06 922                       /dev/dri/card0
+7fa0d627a000-7fa0d627b000 rw-s 110660000 00:06 922                       /dev/dri/card0
+7fa0d627b000-7fa0d627c000 rw-s 11065f000 00:06 922                       /dev/dri/card0
+7fa0d627c000-7fa0d627d000 rw-s 11065e000 00:06 922                       /dev/dri/card0
+7fa0d627d000-7fa0d627e000 rw-s 11065d000 00:06 922                       /dev/dri/card0
+7fa0d627e000-7fa0d627f000 rw-s 11065c000 00:06 922                       /dev/dri/card0
+7fa0d627f000-7fa0d6280000 rw-s 11065b000 00:06 922                       /dev/dri/card0
+7fa0d6280000-7fa0d6281000 rw-s 11065a000 00:06 922                       /dev/dri/card0
+7fa0d6281000-7fa0d6283000 rw-s 110656000 00:06 922                       /dev/dri/card0
+7fa0d6283000-7fa0d6285000 rw-s 110654000 00:06 922                       /dev/dri/card0
+7fa0d6285000-7fa0d6287000 rw-s 110652000 00:06 922                       /dev/dri/card0
+7fa0d6287000-7fa0d6289000 rw-s 110650000 00:06 922                       /dev/dri/card0
+7fa0d6289000-7fa0d628d000 rw-s 110646000 00:06 922                       /dev/dri/card0
+7fa0d628d000-7fa0d6291000 rw-s 110642000 00:06 922                       /dev/dri/card0
+7fa0d6291000-7fa0d6295000 rw-s 11063e000 00:06 922                       /dev/dri/card0
+7fa0d6295000-7fa0d6299000 rw-s 11063a000 00:06 922                       /dev/dri/card0
+7fa0d6299000-7fa0d629d000 rw-s 110636000 00:06 922                       /dev/dri/card0
+7fa0d629d000-7fa0d62a1000 rw-s 110632000 00:06 922                       /dev/dri/card0
+7fa0d62a1000-7fa0d62a5000 rw-s 11062e000 00:06 922                       /dev/dri/card0
+7fa0d62a5000-7fa0d62a9000 rw-s 11062a000 00:06 922                       /dev/dri/card0
+7fa0d62a9000-7fa0d62ad000 rw-s 110626000 00:06 922                       /dev/dri/card0
+7fa0d62ad000-7fa0d62b1000 rw-s 110622000 00:06 922                       /dev/dri/card0
+7fa0d62b1000-7fa0d62b5000 rw-s 11061e000 00:06 922                       /dev/dri/card0
+7fa0d62b5000-7fa0d62b9000 rw-s 11061a000 00:06 922                       /dev/dri/card0
+7fa0d62b9000-7fa0d62bd000 rw-s 110616000 00:06 922                       /dev/dri/card0
+7fa0d62bd000-7fa0d62c1000 rw-s 110612000 00:06 922                       /dev/dri/card0
+7fa0d62c1000-7fa0d62c5000 rw-s 11060e000 00:06 922                       /dev/dri/card0
+7fa0d62c5000-7fa0d62c9000 rw-s 11060a000 00:06 922                       /dev/dri/card0
+7fa0d62c9000-7fa0d62cd000 rw-s 110606000 00:06 922                       /dev/dri/card0
+7fa0d62cd000-7fa0d62d1000 rw-s 110602000 00:06 922                       /dev/dri/card0
+7fa0d62d1000-7fa0d62d5000 rw-s 1105fe000 00:06 922                       /dev/dri/card0
+7fa0d62d5000-7fa0d6315000 rw-s 11059a000 00:06 922                       /dev/dri/card0
+7fa0d6315000-7fa0d6355000 rw-s 11055a000 00:06 922                       /dev/dri/card0
+7fa0d6355000-7fa0d6395000 rw-s 11051a000 00:06 922                       /dev/dri/card0
+7fa0d6395000-7fa0d658a000 rw-p 00000000 00:00 0 
+7fa0d658a000-7fa0d658b000 rw-s 110659000 00:06 922                       /dev/dri/card0
+7fa0d658b000-7fa0d658f000 rw-s 1105fa000 00:06 922                       /dev/dri/card0
+7fa0d658f000-7fa0d6593000 rw-s 1105f6000 00:06 922                       /dev/dri/card0
+7fa0d6593000-7fa0d6597000 rw-s 1105f2000 00:06 922                       /dev/dri/card0
+7fa0d6597000-7fa0d659b000 rw-s 1105ee000 00:06 922                       /dev/dri/card0
+7fa0d659b000-7fa0d659f000 rw-s 1105ea000 00:06 922                       /dev/dri/card0
+7fa0d659f000-7fa0d65a3000 rw-s 1105e6000 00:06 922                       /dev/dri/card0
+7fa0d65a3000-7fa0d65a7000 rw-s 1105e2000 00:06 922                       /dev/dri/card0
+7fa0d65a7000-7fa0d65ab000 rw-s 1105de000 00:06 922                       /dev/dri/card0
+7fa0d65ab000-7fa0d65af000 rw-s 1105da000 00:06 922                       /dev/dri/card0
+7fa0d65af000-7fa0d65ef000 rw-s 1104da000 00:06 922                       /dev/dri/card0
+7fa0d65ef000-7fa0d65f7000 rw-s 1104d2000 00:06 922                       /dev/dri/card0
+7fa0d65f7000-7fa0d65ff000 rw-s 1104ca000 00:06 922                       /dev/dri/card0
+7fa0d65ff000-7fa0d6607000 rw-s 1104c2000 00:06 922                       /dev/dri/card0
+7fa0d6607000-7fa0d660f000 rw-s 1104ba000 00:06 922                       /dev/dri/card0
+7fa0d660f000-7fa0d6617000 rw-s 1104b1000 00:06 922                       /dev/dri/card0
+7fa0d6617000-7fa0d661f000 rw-s 1104a9000 00:06 922                       /dev/dri/card0
+7fa0d661f000-7fa0d6627000 rw-s 1104a1000 00:06 922                       /dev/dri/card0
+7fa0d6627000-7fa0d662f000 rw-s 110499000 00:06 922                       /dev/dri/card0
+7fa0d662f000-7fa0d6637000 rw-s 110491000 00:06 922                       /dev/dri/card0
+7fa0d6637000-7fa0d663f000 rw-s 1215ba000 00:06 922                       /dev/dri/card0
+7fa0d663f000-7fa0d6647000 rw-s 1215b2000 00:06 922                       /dev/dri/card0
+7fa0d6647000-7fa0d664f000 rw-s 1215aa000 00:06 922                       /dev/dri/card0
+7fa0d664f000-7fa0d6657000 rw-s 1215a2000 00:06 922                       /dev/dri/card0
+7fa0d6657000-7fa0d665f000 rw-s 121625000 00:06 922                       /dev/dri/card0
+7fa0d665f000-7fa0d6667000 rw-s 12161d000 00:06 922                       /dev/dri/card0
+7fa0d6667000-7fa0d666f000 rw-s 121615000 00:06 922                       /dev/dri/card0
+7fa0d666f000-7fa0d6677000 rw-s 12160d000 00:06 922                       /dev/dri/card0
+7fa0d6677000-7fa0d667f000 rw-s 121605000 00:06 922                       /dev/dri/card0
+7fa0d667f000-7fa0d6687000 rw-s 1215fd000 00:06 922                       /dev/dri/card0
+7fa0d6687000-7fa0d668f000 rw-s 110489000 00:06 922                       /dev/dri/card0
+7fa0d668f000-7fa0d6697000 rw-s 110481000 00:06 922                       /dev/dri/card0
+7fa0d6697000-7fa0d669f000 rw-s 110479000 00:06 922                       /dev/dri/card0
+7fa0d669f000-7fa0d66a7000 rw-s 110471000 00:06 922                       /dev/dri/card0
+7fa0d66a7000-7fa0d66af000 rw-s 110469000 00:06 922                       /dev/dri/card0
+7fa0d66af000-7fa0d66b7000 rw-s 110461000 00:06 922                       /dev/dri/card0
+7fa0d66b7000-7fa0d66bf000 rw-s 110459000 00:06 922                       /dev/dri/card0
+7fa0d66bf000-7fa0d66c7000 rw-s 110451000 00:06 922                       /dev/dri/card0
+7fa0d66c7000-7fa0d66cf000 rw-s 110449000 00:06 922                       /dev/dri/card0
+7fa0d66cf000-7fa0d66d7000 rw-s 110441000 00:06 922                       /dev/dri/card0
+7fa0d66d7000-7fa0d66df000 rw-s 110439000 00:06 922                       /dev/dri/card0
+7fa0d66df000-7fa0d66e7000 rw-s 119edb000 00:06 922                       /dev/dri/card0
+7fa0d66e7000-7fa0d66ef000 rw-s 119ed3000 00:06 922                       /dev/dri/card0
+7fa0d66ef000-7fa0d66f7000 rw-s 119ecb000 00:06 922                       /dev/dri/card0
+7fa0d66f7000-7fa0d66ff000 rw-s 119ec3000 00:06 922                       /dev/dri/card0
+7fa0d66ff000-7fa0d6707000 rw-s 119ebb000 00:06 922                       /dev/dri/card0
+7fa0d6707000-7fa0d670f000 rw-s 112a91000 00:06 922                       /dev/dri/card0
+7fa0d670f000-7fa0d6717000 rw-s 110686000 00:06 922                       /dev/dri/card0
+7fa0d6717000-7fa0d671f000 rw-s 11067e000 00:06 922                       /dev/dri/card0
+7fa0d671f000-7fa0d6727000 rw-s 110676000 00:06 922                       /dev/dri/card0
+7fa0d6727000-7fa0d672f000 rw-s 11066e000 00:06 922                       /dev/dri/card0
+7fa0d672f000-7fa0d6737000 rw-s 110403000 00:06 922                       /dev/dri/card0
+7fa0d6737000-7fa0d673f000 rw-s 1103fb000 00:06 922                       /dev/dri/card0
+7fa0d673f000-7fa0d6747000 rw-s 1214c1000 00:06 922                       /dev/dri/card0
+7fa0d6747000-7fa0d674f000 rw-s 1214b9000 00:06 922                       /dev/dri/card0
+7fa0d674f000-7fa0d6757000 rw-s 1214b1000 00:06 922                       /dev/dri/card0
+7fa0d6757000-7fa0d675f000 rw-s 1216be000 00:06 922                       /dev/dri/card0
+7fa0d675f000-7fa0d677f000 rw-s 1214ef000 00:06 922                       /dev/dri/card0
+7fa0d6780000-7fa0d6782000 rw-s 112cfa000 00:06 922                       /dev/dri/card0
+7fa0d6782000-7fa0d6784000 rw-s 112cf8000 00:06 922                       /dev/dri/card0
+7fa0d6784000-7fa0d6786000 rw-s 112cf6000 00:06 922                       /dev/dri/card0
+7fa0d6786000-7fa0d6788000 rw-s 112cf4000 00:06 922                       /dev/dri/card0
+7fa0d6788000-7fa0d678a000 rw-s 112cf2000 00:06 922                       /dev/dri/card0
+7fa0d678a000-7fa0d678c000 rw-s 112cf0000 00:06 922                       /dev/dri/card0
+7fa0d678c000-7fa0d678e000 rw-s 112cee000 00:06 922                       /dev/dri/card0
+7fa0d678e000-7fa0d6790000 rw-s 112cec000 00:06 922                       /dev/dri/card0
+7fa0d6790000-7fa0d6792000 rw-s 112cea000 00:06 922                       /dev/dri/card0
+7fa0d6792000-7fa0d6794000 rw-s 112ce8000 00:06 922                       /dev/dri/card0
+7fa0d6794000-7fa0d6796000 rw-s 112ce6000 00:06 922                       /dev/dri/card0
+7fa0d6796000-7fa0d6798000 rw-s 112ce4000 00:06 922                       /dev/dri/card0
+7fa0d6798000-7fa0d679a000 rw-s 112ce2000 00:06 922                       /dev/dri/card0
+7fa0d679a000-7fa0d679c000 rw-s 112ce0000 00:06 922                       /dev/dri/card0
+7fa0d679c000-7fa0d679e000 rw-s 112cde000 00:06 922                       /dev/dri/card0
+7fa0d679e000-7fa0d67a0000 rw-s 112cdc000 00:06 922                       /dev/dri/card0
+7fa0d67a0000-7fa0d67a2000 rw-s 112cda000 00:06 922                       /dev/dri/card0
+7fa0d67a2000-7fa0d67a4000 rw-s 112cd8000 00:06 922                       /dev/dri/card0
+7fa0d67a4000-7fa0d67a6000 rw-s 112cd6000 00:06 922                       /dev/dri/card0
+7fa0d67a6000-7fa0d67a8000 rw-s 112cd4000 00:06 922                       /dev/dri/card0
+7fa0d67a8000-7fa0d67aa000 rw-s 112cd2000 00:06 922                       /dev/dri/card0
+7fa0d67aa000-7fa0d67ac000 rw-s 112cd0000 00:06 922                       /dev/dri/card0
+7fa0d67ac000-7fa0d67ae000 rw-s 112cce000 00:06 922                       /dev/dri/card0
+7fa0d67ae000-7fa0d67b0000 rw-s 112ccc000 00:06 922                       /dev/dri/card0
+7fa0d67b0000-7fa0d67b2000 rw-s 112cca000 00:06 922                       /dev/dri/card0
+7fa0d67b2000-7fa0d67b4000 rw-s 112cc8000 00:06 922                       /dev/dri/card0
+7fa0d67b4000-7fa0d67b6000 rw-s 112cc6000 00:06 922                       /dev/dri/card0
+7fa0d67b6000-7fa0d67b8000 rw-s 112cc4000 00:06 922                       /dev/dri/card0
+7fa0d67b8000-7fa0d67ba000 rw-s 112cc2000 00:06 922                       /dev/dri/card0
+7fa0d67ba000-7fa0d67bc000 rw-s 112cc0000 00:06 922                       /dev/dri/card0
+7fa0d67bc000-7fa0d67be000 rw-s 112cbe000 00:06 922                       /dev/dri/card0
+7fa0d67be000-7fa0d67c0000 rw-s 112cbc000 00:06 922                       /dev/dri/card0
+7fa0d67c0000-7fa0d67c20

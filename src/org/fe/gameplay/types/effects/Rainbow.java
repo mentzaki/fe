@@ -19,7 +19,7 @@ package org.fe.gameplay.types.effects;
 import org.fe.Main;
 import org.fe.gameplay.types.Entity;
 import org.fe.graphics.FImage;
-import org.fgameplay.types.Effect;
+import org.fe.gameplay.types.Effect;
 import org.newdawn.slick.Color;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -63,12 +63,12 @@ public class Rainbow extends Effect {
         this.x1 = a.x;
         this.y1 = a.y / 2;
         glColor4f(1, 1, 1, ((float) life) / 50f);
-        
+
         rainbow.bind();
-        
+
         double d = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
         double a = atan2(y2 - y1, x2 - x1);
-        
+
         glBegin(GL_POLYGON);
         {
             glTexCoord2d(0, 0);
@@ -94,6 +94,6 @@ public class Rainbow extends Effect {
         }
         glEnd();
         glBindTexture(GL_TEXTURE_2D, 0);
-        
+
     }
 }

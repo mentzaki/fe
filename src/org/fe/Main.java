@@ -57,14 +57,14 @@ public class Main {
             SETTINGS = new FData(null);
         }
         FWindow.double_pixels = SETTINGS.def("doublepixels").toBoolean(false);
-        FLocale.init();
         Scenes.init();
+        FLocale.init();
         NetworkConnection.init();
         Types.init();
         if (Main.SETTINGS.get("nickname").toString().equals("noob")) {
             WINDOW.setScene(SIGN_UP);
-        }else{
-            System.out.println(Main.SETTINGS.get("nickname").toString()); 
+        } else {
+            System.out.println(Main.SETTINGS.get("nickname").toString());
         }
     }
 

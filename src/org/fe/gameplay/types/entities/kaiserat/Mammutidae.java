@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fe.gameplay.types.entities;
+package org.fe.gameplay.types.entities.kaiserat;
 
+import org.fe.Main;
 import org.fe.gameplay.types.Attack;
 import org.fe.gameplay.types.Entity;
+import org.fe.gameplay.types.effects.Explosion;
 import org.fe.graphics.FColor;
 import org.fe.graphics.FImage;
 import org.newdawn.slick.Color;
@@ -26,10 +28,19 @@ import org.newdawn.slick.Color;
  *
  * @author yew_mentzaki
  */
-public class KaiseratMammutidae extends Entity {
+public class Mammutidae extends Entity {
 
-    public KaiseratMammutidae() {
-        attack1 = new Attack(6, true, Attack.HEADLESS, 700, 70, 250, 10);
+    public Mammutidae() {
+        attack1 = new Attack(6, true, Attack.HEADLESS, 700, 70, 250, 10){
+            @Override
+            protected void attack(Entity e, Entity[] list, Entity t) {
+                super.attack(e, list, t); 
+                world.add(new Explosion(t.x + Main.RANDOM.nextInt(t.width)
+                        - t.width / 2,
+                        t.y + Main.RANDOM.nextInt(t.width) - t.width / 2));
+            }
+            
+        };
     }
 
     static FImage[] stands = {

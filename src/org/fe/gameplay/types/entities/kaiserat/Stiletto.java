@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fe.gameplay.types.entities;
+package org.fe.gameplay.types.entities.kaiserat;
 
 import org.fe.Main;
 import org.fe.gameplay.types.*;
@@ -25,7 +25,7 @@ import org.fe.graphics.FImage;
  *
  * @author yew_mentzaki
  */
-public class KaiseratStiletto extends Entity {
+public class Stiletto extends Entity {
 
     static FImage[] stands = {
         new FImage("entities/kaiserat/stiletto/stand/0"),
@@ -57,7 +57,7 @@ public class KaiseratStiletto extends Entity {
         new FImage("entities/kaiserat/stiletto/prism/2_team"),
         new FImage("entities/kaiserat/stiletto/prism/3_team")};
 
-    public KaiseratStiletto() {
+    public Stiletto() {
         hp = maxHp = 10;
         shield = maxShield = 200;
 
@@ -68,7 +68,7 @@ public class KaiseratStiletto extends Entity {
             protected void attack(Entity en, Entity list[], Entity t) {
                 int additionaldamage = 0;
                 for (Entity e : list) {
-                    if (e instanceof KaiseratStiletto && e.owner == owner) {
+                    if (e instanceof Stiletto && e.hp > 0 && e.owner == owner) {
                         double d = dist(x, y, e.x, e.y);
                         if (d < 200) {
                             additionaldamage++;
